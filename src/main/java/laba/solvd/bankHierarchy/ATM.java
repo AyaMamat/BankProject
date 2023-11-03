@@ -14,6 +14,7 @@ public class ATM {
     public void setAtmCode(long atmCode) {
         this.atmCode = atmCode;
     }
+
     public void checkBalance(Customer customer) {
         if (customer.getCard() != null && customer.getAccount() != null) {
             double accountBalance = customer.getAccount().getAccountBalance();
@@ -22,6 +23,7 @@ public class ATM {
             System.out.println("ATM " + atmCode + " - Unable to check balance. Invalid customer or card information.");
         }
     }
+
     public void withdrawCash(Customer customer, double amount) {
         if (customer.getAccount() != null) {
             double accountBalance = customer.getAccount().getAccountBalance();
@@ -34,6 +36,7 @@ public class ATM {
             }
         }
     }
+
     public void deposit(Customer customer, double amount) {
         if (customer.getAccount() != null) {
             double accountBalance = customer.getAccount().getAccountBalance();

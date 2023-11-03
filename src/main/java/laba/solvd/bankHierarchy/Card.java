@@ -8,6 +8,7 @@ public class Card {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
     }
+
     public String getCardNumber() {
         return cardNumber;
     }

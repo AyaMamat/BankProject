@@ -2,14 +2,14 @@ package laba.solvd.bankHierarchy;
 
 import java.util.Objects;
 
-public class Employee extends Person{
+public class Employee extends Person {
 
     private int employeeId;
     private Position position;
 
-    public Employee(String name, String address, String phoneNumber,Position position) {
+    public Employee(String name, String address, String phoneNumber, Position position) {
         super(name, address, phoneNumber);
-        this.position=position;
+        this.position = position;
     }
 
 
@@ -28,6 +28,7 @@ public class Employee extends Person{
     public void setPosition(Position position) {
         this.position = position;
     }
+
     @Override
     public String toString() {
         return "Employee{" +

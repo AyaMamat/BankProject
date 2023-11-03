@@ -24,6 +24,7 @@ public class Position {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
     @Override
     public String toString() {
         return "'" + title + '\'' +

@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Branch {
     private String address;
-    private List <ATM> atms;
+    private List<ATM> atms;
 
     public Branch(String address, int numberOfATMs) {
         this.address = address;
@@ -19,6 +19,7 @@ public class Branch {
             atms.add(atm);
         }
     }
+
     private long generateUniqueBarcode() {
         Random random = new Random();
         long barcode;

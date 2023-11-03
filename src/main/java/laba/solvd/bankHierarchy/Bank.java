@@ -8,7 +8,7 @@ public class Bank {
     private String bankName;
     private List<Branch> branches;
     private List<Customer> customers;
-    private List<Employee> employees ;
+    private List<Employee> employees;
 
 
     public Bank(String bankName) {
