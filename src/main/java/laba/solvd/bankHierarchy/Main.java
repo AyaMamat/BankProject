@@ -48,7 +48,7 @@ public class Main {
         bank.addBranch(branch2);
 
         // Creating an employee
-        Employee employee = new Employee("Aika Mamat", "2134 N Knollwood Ave", "123-456-7890", new Position("Manager", 50000.0));
+        Employee employee = new Employee("Aya Mamat", "2134 N Knollwood Ave", "123-456-7890", new Position("Manager", 50000.0));
         employee.setEmployeeId(1356888);
         logger.info(employee);
 
@@ -71,7 +71,6 @@ public class Main {
         Customer customer2 = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210", customerAccount2, customerCard2);
         logger.info(customer1);
         logger.info(customer2);
-        boolean areEqual = customer1.equals(customer2);
 
         try {
             bank.addCustomer(customer1);
@@ -83,11 +82,11 @@ public class Main {
 
         try {
             card.makePayment(customer1, paymentAmount);
-            System.out.println("Payment successful.");
+            logger.info("Payment successful.");
         } catch (InsufficientFundsException e) {
             System.out.println("Error: " + e.getMessage());
         } catch (InvalidCustomerException e) {
-            System.out.println("Error: " + e.getMessage());
+            logger.info("Error: " + e.getMessage());
         }
 
         logger.info("=====================================================");

@@ -28,30 +28,6 @@ public class CustomLinkedList<E> implements List<E> {
         throw new UnsupportedOperationException("Method not supported ");
     }
 
-    private class CustomLinkedListIterator implements Iterator<E> {
-        private Node<E> currentNode;
-
-        public CustomLinkedListIterator() {
-            currentNode = head;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return currentNode != null;
-        }
-
-        @Override
-        public E next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            E data = currentNode.data;
-            currentNode = currentNode.next;
-            return data;
-        }
-    }
-
-
     @Override
     public void forEach(Consumer<? super E> action) {
         List.super.forEach(action);
@@ -60,16 +36,6 @@ public class CustomLinkedList<E> implements List<E> {
     @Override
     public Spliterator<E> spliterator() {
         return List.super.spliterator();
-    }
-
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-
-        Node(E element) {
-            this.data = element;
-            this.next = null;
-        }
     }
 
     public E remove(int index) {
@@ -323,5 +289,38 @@ public class CustomLinkedList<E> implements List<E> {
 
     public int size() {
         return size;
+    }
+
+    private static class Node<E> {
+        E data;
+        Node<E> next;
+
+        Node(E element) {
+            this.data = element;
+            this.next = null;
+        }
+    }
+
+    private class CustomLinkedListIterator implements Iterator<E> {
+        private Node<E> currentNode;
+
+        public CustomLinkedListIterator() {
+            currentNode = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            E data = currentNode.data;
+            currentNode = currentNode.next;
+            return data;
+        }
     }
 }

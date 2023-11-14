@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transaction {
+    private static final List<Transaction> transactionList = new ArrayList<>();
     private String transactionType;
     private double amount;
     private String transactionDate;
-    private static List<Transaction> transactionList = new ArrayList<>();
 
     public Transaction(String transactionType, double amount, String transactionDate) {
         this.transactionType = transactionType;
@@ -15,6 +15,9 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
+    public static List<Transaction> getTransactionList() {
+        return transactionList;
+    }
 
     public String getTransactionType() {
         return transactionType;
@@ -44,10 +47,6 @@ public class Transaction {
         Transaction newTransaction = new Transaction(transactionType, amount, transactionDate);
         transactionList.add(newTransaction);
 
-    }
-
-    public static List<Transaction> getTransactionList() {
-        return transactionList;
     }
 
 }

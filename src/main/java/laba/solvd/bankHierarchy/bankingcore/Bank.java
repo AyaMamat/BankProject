@@ -9,10 +9,7 @@ import java.util.*;
 
 public class Bank {
     private static final String bankName = "Chase";
-    private List<Branch> branches;
-    private Set<Customer> customers;
-    private CustomLinkedList<Employee> employees;
-    private static List<String> currencyList;
+    private static final List<String> currencyList;
 
     static {
         currencyList = new ArrayList<>();
@@ -21,10 +18,18 @@ public class Bank {
         currencyList.add("JPY");
     }
 
+    private final List<Branch> branches;
+    private final Set<Customer> customers;
+    private final CustomLinkedList<Employee> employees;
+
     public Bank(String bankName) {
         branches = new ArrayList<>();
         customers = new HashSet<>();
         employees = new CustomLinkedList<>();
+    }
+
+    public static List<String> getCurrencyList() {
+        return currencyList;
     }
 
     public String getBankName() {
@@ -59,10 +64,6 @@ public class Bank {
         employees.add(employee);
     }
 
-    public static List<String> getCurrencyList() {
-        return currencyList;
-    }
-
     @Override
     public String toString() {
         return "Bank{" +
@@ -80,6 +81,6 @@ public class Bank {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bank bank = (Bank) o;
-        return Objects.equals(bankName, bank.bankName);
+        return Objects.equals(bankName, bankName);
     }
 }

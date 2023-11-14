@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class Branch {
     private String address;
-    private List<ATM> atms;
+    private final List<ATM> atms;
 
     public Branch(String address, int numberOfATMs) {
         this.address = address;
@@ -62,4 +62,4 @@ public class Branch {
         }
         return true; // Unique
     }
-    }
+}
