@@ -1,10 +1,8 @@
-package laba.solvd.bankHierarchy.people;
-
-import laba.solvd.bankHierarchy.interfaces.IPerson;
+package laba.solvd.bankHierarchy;
 
 import java.util.Objects;
 
-public abstract class Person implements IPerson {
+public class Person {
 
     private String name;
     private String address;
@@ -40,12 +38,6 @@ public abstract class Person implements IPerson {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
-    public String getContactInfo(String name, String address, String phoneNumber) {
-        return "Name: " + name + ", Address: " + address + ", Phone Number: " + phoneNumber;
-    }
-
-    @Override
     public void updateContactInfo(String name, String address, String phoneNumber) {
         this.name = name;
         this.address = address;

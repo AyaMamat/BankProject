@@ -1,20 +1,20 @@
-package laba.solvd.bankHierarchy.people;
+package laba.solvd.bankHierarchy;
 
-import laba.solvd.bankHierarchy.financial.Account;
-import laba.solvd.bankHierarchy.financial.Card;
-import laba.solvd.bankHierarchy.interfaces.ICustomer;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Customer extends Person implements ICustomer {
+public class Customer extends Person {
 
     private Account account;
     private Card card;
+    private List<String> transactionHistory;
 
     public Customer(String name, String address, String phoneNumber, Account account, Card card) {
         super(name, address, phoneNumber);
         this.account = account;
         this.card = card;
+        this.transactionHistory = new ArrayList<>();
     }
 
     public Account getAccount() {
@@ -33,6 +33,14 @@ public class Customer extends Person implements ICustomer {
         this.card = card;
     }
 
+    public void recordTransaction(String transaction) {
+        transactionHistory.add(transaction);
+    }
+
+    public List<String> getTransactionHistory() {
+        return transactionHistory;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -40,27 +48,6 @@ public class Customer extends Person implements ICustomer {
                 ", address='" + getAddress() + '\'' +
                 ", phoneNumber='" + getPhoneNumber() + '\'' +
                 '}';
-    }
-
-    @Override
-    public void applyForLoan(String customerName, double loanAmount) {
-
-        if (loanAmount <= 0) {
-            System.out.println("Invalid loan amount.Loan amount should be greater than 0.");
-        } else if (loanAmount >= 100000) {
-            System.out.println("Loan amount exceeds the maximum limit of $100000.");
-        }
-
-        double interestRate = 0.05;
-        double interest = loanAmount * interestRate;
-        double totalAmount = loanAmount + interest;
-
-        System.out.println("Loan application for " + customerName + ":\n");
-        System.out.println("Loan Amount: $" + loanAmount);
-        System.out.println("Interest Rate: " + (interestRate * 100) + "%");
-        System.out.println("Interest Amount: $" + interest);
-        System.out.println("Total Amount Payable: $" + totalAmount);
-
     }
 
     @Override
