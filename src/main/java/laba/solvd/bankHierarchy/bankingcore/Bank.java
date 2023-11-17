@@ -9,6 +9,9 @@ import java.util.*;
 
 public class Bank {
     private static final String bankName = "Chase";
+    private final List<Branch> branches;
+    private final Set<Customer> customers;
+    private final CustomLinkedList<Employee> employees;
     private static final List<String> currencyList;
 
     static {
@@ -17,10 +20,6 @@ public class Bank {
         currencyList.add("EUR");
         currencyList.add("JPY");
     }
-
-    private final List<Branch> branches;
-    private final Set<Customer> customers;
-    private final CustomLinkedList<Employee> employees;
 
     public Bank(String bankName) {
         branches = new ArrayList<>();
