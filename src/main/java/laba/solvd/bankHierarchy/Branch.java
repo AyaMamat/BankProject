@@ -1,7 +1,6 @@
-package laba.solvd.bankHierarchy.bankingcore;
+package laba.solvd.bankHierarchy;
 
 
-import laba.solvd.bankHierarchy.bankingcore.ATM;
 import laba.solvd.bankHierarchy.exceptions.DuplicateAtmException;
 
 import java.util.ArrayList;
@@ -45,6 +44,7 @@ public class Branch {
     public List<ATM> getAtms() {
         return atms;
     }
+
 
     public void addAtms(ATM atm) throws DuplicateAtmException {
         if (isATMCodeUnique(atm.getAtmCode())) {

@@ -1,5 +1,7 @@
 package laba.solvd.bankHierarchy.financial;
 
+import laba.solvd.bankHierarchy.Account;
+
 import java.util.ArrayList;
 import java.util.List;
 

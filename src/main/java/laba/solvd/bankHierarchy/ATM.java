@@ -1,11 +1,6 @@
-package laba.solvd.bankHierarchy.bankingcore;
+package laba.solvd.bankHierarchy;
 
-import laba.solvd.bankHierarchy.exceptions.InsufficientFundsException;
-import laba.solvd.bankHierarchy.interfaces.IManageMoney;
-import laba.solvd.bankHierarchy.people.Customer;
-
-public class ATM implements IManageMoney {
-    private static final int maxWithdrawalAmount = 500;
+public class ATM {
     private long atmCode;
 
     public ATM(long atmCode) {
@@ -20,7 +15,6 @@ public class ATM implements IManageMoney {
         this.atmCode = atmCode;
     }
 
-    @Override
     public void checkBalance(Customer customer) {
         if (customer.getCard() != null && customer.getAccount() != null) {
             double accountBalance = customer.getAccount().getAccountBalance();
@@ -30,8 +24,7 @@ public class ATM implements IManageMoney {
         }
     }
 
-    @Override
-    public void withdrawCash(Customer customer, double amount) throws InsufficientFundsException {
+    public void withdrawCash(Customer customer, double amount) {
         if (customer.getAccount() != null) {
             double accountBalance = customer.getAccount().getAccountBalance();
             if (accountBalance >= amount) {
@@ -39,12 +32,11 @@ public class ATM implements IManageMoney {
                 customer.getAccount().setAccountBalance(accountBalance);
                 System.out.println(customer.getName() + " has withdrawn $" + amount + " from the atm " + atmCode);
             } else {
-                throw new InsufficientFundsException("Insufficient funds for withdrawal");
+                System.out.println("Insufficient funds.");
             }
         }
     }
 
-    @Override
     public void deposit(Customer customer, double amount) {
         if (customer.getAccount() != null) {
             double accountBalance = customer.getAccount().getAccountBalance();

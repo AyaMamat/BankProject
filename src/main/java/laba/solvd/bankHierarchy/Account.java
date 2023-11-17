@@ -1,4 +1,4 @@
-package laba.solvd.bankHierarchy.financial;
+package laba.solvd.bankHierarchy;
 
 public class Account {
     private String accountNumber;

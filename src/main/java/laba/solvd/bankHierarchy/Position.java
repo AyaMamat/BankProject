@@ -1,4 +1,4 @@
-package laba.solvd.bankHierarchy.people;
+package laba.solvd.bankHierarchy;
 
 public class Position {
     private String title;
