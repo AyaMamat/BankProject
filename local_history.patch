@@ -1,0 +1,1900 @@
+Index: src/main/java/laba/solvd/bankHierarchy/ATM.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/ATM.java b/src/main/java/laba/solvd/bankHierarchy/ATM.java
+new file mode 100644
+--- /dev/null	(date 1700221004240)
++++ b/src/main/java/laba/solvd/bankHierarchy/ATM.java	(date 1700221004240)
+@@ -0,0 +1,48 @@
++package laba.solvd.bankHierarchy;
++
++public class ATM {
++    private long atmCode;
++
++    public ATM(long atmCode) {
++        this.atmCode = atmCode;
++    }
++
++    public long getAtmCode() {
++        return atmCode;
++    }
++
++    public void setAtmCode(long atmCode) {
++        this.atmCode = atmCode;
++    }
++
++    public void checkBalance(Customer customer) {
++        if (customer.getCard() != null && customer.getAccount() != null) {
++            double accountBalance = customer.getAccount().getAccountBalance();
++            System.out.println("ATM " + atmCode + " - Account Balance for " + customer.getName() + ": $" + accountBalance);
++        } else {
++            System.out.println("ATM " + atmCode + " - Unable to check balance. Invalid customer or card information.");
++        }
++    }
++
++    public void withdrawCash(Customer customer, double amount) {
++        if (customer.getAccount() != null) {
++            double accountBalance = customer.getAccount().getAccountBalance();
++            if (accountBalance >= amount) {
++                accountBalance -= amount;
++                customer.getAccount().setAccountBalance(accountBalance);
++                System.out.println(customer.getName() + " has withdrawn $" + amount + " from the atm " + atmCode);
++            } else {
++                System.out.println("Insufficient funds.");
++            }
++        }
++    }
++
++    public void deposit(Customer customer, double amount) {
++        if (customer.getAccount() != null) {
++            double accountBalance = customer.getAccount().getAccountBalance();
++            accountBalance += amount;
++            customer.getAccount().setAccountBalance(accountBalance);
++            System.out.println(customer.getName() + " has deposited $" + amount + " into the atm " + atmCode);
++        }
++    }
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Bank.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Bank.java b/src/main/java/laba/solvd/bankHierarchy/Bank.java
+new file mode 100644
+--- /dev/null	(date 1700221004241)
++++ b/src/main/java/laba/solvd/bankHierarchy/Bank.java	(date 1700221004241)
+@@ -0,0 +1,72 @@
++package laba.solvd.bankHierarchy;
++
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Objects;
++
++public class Bank {
++    private String bankName;
++    private List<Branch> branches;
++    private List<Customer> customers;
++    private List<Employee> employees;
++
++
++    public Bank(String bankName) {
++        this.bankName = bankName;
++        branches = new ArrayList<>();
++        customers = new ArrayList<>();
++        employees = new ArrayList<>();
++    }
++
++    public String getBankName() {
++        return bankName;
++    }
++
++    public void setBankName(String bankName) {
++        this.bankName = bankName;
++    }
++
++    public List<Branch> getBranches() {
++        return branches;
++    }
++
++    public void addBranch(Branch branch) {
++        branches.add(branch);
++    }
++
++    public List<Customer> getCustomers() {
++        return customers;
++    }
++
++    public void addCustomer(Customer customer) {
++        customers.add(customer);
++    }
++
++    public List<Employee> getEmployees() {
++        return employees;
++    }
++
++    public void addEmployee(Employee employee) {
++        employees.add(employee);
++    }
++
++    @Override
++    public String toString() {
++        return "Bank{" +
++                "bankName='" + bankName + '\'' +
++                '}';
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(bankName);
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        Bank bank = (Bank) o;
++        return Objects.equals(bankName, bank.bankName);
++    }
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Card.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Card.java b/src/main/java/laba/solvd/bankHierarchy/Card.java
+new file mode 100644
+--- /dev/null	(date 1700221004241)
++++ b/src/main/java/laba/solvd/bankHierarchy/Card.java	(date 1700221004241)
+@@ -0,0 +1,53 @@
++package laba.solvd.bankHierarchy;
++
++public class Card {
++    private String cardNumber;
++    private String expirationDate;
++
++    public Card(String cardNumber, String expirationDate) {
++        this.cardNumber = cardNumber;
++        this.expirationDate = expirationDate;
++    }
++
++    public String getCardNumber() {
++        return cardNumber;
++    }
++
++    public void setCardNumber(String cardNumber) {
++        this.cardNumber = cardNumber;
++    }
++
++    public String getExpirationDate() {
++        return expirationDate;
++    }
++
++    public void setExpirationDate(String expirationDate) {
++        this.expirationDate = expirationDate;
++    }
++
++
++    public void checkBalance(Customer customer) {
++        if (customer.getAccount() != null) {
++            double accountBalance = customer.getAccount().getAccountBalance();
++            System.out.println("Card " + cardNumber + " - Account Balance for " + customer.getName() + ": $" + accountBalance);
++        } else {
++            System.out.println("Card " + cardNumber + " - Unable to check balance. Invalid customer or account information.");
++        }
++    }
++
++    public void makePayment(Customer customer, double amount) {
++        if (customer.getAccount() != null) {
++            double accountBalance = customer.getAccount().getAccountBalance();
++            if (accountBalance >= amount) {
++                accountBalance -= amount;
++                customer.getAccount().setAccountBalance(accountBalance);
++                System.out.println("Card " + cardNumber + " - Payment of $" + amount + " made for " + customer.getName());
++            } else {
++                System.out.println("Card " + cardNumber + " - Insufficient funds for payment.");
++            }
++        } else {
++            System.out.println("Card " + cardNumber + " - Unable to make a payment. Invalid customer or account information.");
++        }
++    }
++
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Branch.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Branch.java b/src/main/java/laba/solvd/bankHierarchy/Branch.java
+new file mode 100644
+--- /dev/null	(date 1700222087627)
++++ b/src/main/java/laba/solvd/bankHierarchy/Branch.java	(date 1700222087627)
+@@ -0,0 +1,49 @@
++package laba.solvd.bankHierarchy;
++
++
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Random;
++
++public class Branch {
++    private String address;
++    private List<ATM> atms;
++
++    public Branch(String address, int numberOfATMs) {
++        this.address = address;
++        this.atms = new ArrayList<>();
++
++        for (int i = 0; i <= numberOfATMs; i++) {
++            long atmCode = generateUniqueBarcode();
++            ATM atm = new ATM(atmCode);
++            atms.add(atm);
++        }
++    }
++
++    private long generateUniqueBarcode() {
++        Random random = new Random();
++        long barcode;
++
++        do {
++            barcode = random.nextLong();  // Generate a random long value as the barcode
++        } while (barcode < 0);  // Ensure the barcode is a non-negative number
++
++        return barcode;
++    }
++
++    public String getAddress() {
++        return address;
++    }
++
++    public void setAddress(String address) {
++        this.address = address;
++    }
++
++    public List<ATM> getAtms() {
++        return atms;
++    }
++
++    public void addAtms(ATM atm) {
++        atms.add(atm);
++    }
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Person.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Person.java b/src/main/java/laba/solvd/bankHierarchy/Person.java
+new file mode 100644
+--- /dev/null	(date 1700221004243)
++++ b/src/main/java/laba/solvd/bankHierarchy/Person.java	(date 1700221004243)
+@@ -0,0 +1,47 @@
++package laba.solvd.bankHierarchy;
++
++import java.util.Objects;
++
++public class Person {
++
++    private String name;
++    private String address;
++    private String phoneNumber;
++
++    public Person(String name, String address, String phoneNumber) {
++        this.name = name;
++        this.address = address;
++        this.phoneNumber = phoneNumber;
++    }
++
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
++
++    public String getAddress() {
++        return address;
++    }
++
++    public void setAddress(String address) {
++        this.address = address;
++    }
++
++    public String getPhoneNumber() {
++        return phoneNumber;
++    }
++
++    public void setPhoneNumber(String phoneNumber) {
++        this.phoneNumber = phoneNumber;
++    }
++
++    public void updateContactInfo(String name, String address, String phoneNumber) {
++        this.name = name;
++        this.address = address;
++        this.phoneNumber = phoneNumber;
++
++    }
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Account.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Account.java b/src/main/java/laba/solvd/bankHierarchy/Account.java
+new file mode 100644
+--- /dev/null	(date 1700221004241)
++++ b/src/main/java/laba/solvd/bankHierarchy/Account.java	(date 1700221004241)
+@@ -0,0 +1,28 @@
++package laba.solvd.bankHierarchy;
++
++public class Account {
++    private String accountNumber;
++    private double accountBalance;
++
++    public Account(String accountNumber, double accountBalance) {
++        this.accountNumber = accountNumber;
++        this.accountBalance = accountBalance;
++    }
++
++    public String getAccountNumber() {
++        return accountNumber;
++    }
++
++    public void setAccountNumber(String accountNumber) {
++        this.accountNumber = accountNumber;
++    }
++
++    public double getAccountBalance() {
++        return accountBalance;
++    }
++
++    public void setAccountBalance(double accountBalance) {
++        this.accountBalance = accountBalance;
++    }
++
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Customer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Customer.java b/src/main/java/laba/solvd/bankHierarchy/Customer.java
+new file mode 100644
+--- /dev/null	(date 1700221004242)
++++ b/src/main/java/laba/solvd/bankHierarchy/Customer.java	(date 1700221004242)
+@@ -0,0 +1,67 @@
++package laba.solvd.bankHierarchy;
++
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Objects;
++
++public class Customer extends Person {
++
++    private Account account;
++    private Card card;
++    private List<String> transactionHistory;
++
++    public Customer(String name, String address, String phoneNumber, Account account, Card card) {
++        super(name, address, phoneNumber);
++        this.account = account;
++        this.card = card;
++        this.transactionHistory = new ArrayList<>();
++    }
++
++    public Account getAccount() {
++        return account;
++    }
++
++    public void setAccount(Account account) {
++        this.account = account;
++    }
++
++    public Card getCard() {
++        return card;
++    }
++
++    public void setCard(Card card) {
++        this.card = card;
++    }
++
++    public void recordTransaction(String transaction) {
++        transactionHistory.add(transaction);
++    }
++
++    public List<String> getTransactionHistory() {
++        return transactionHistory;
++    }
++
++    @Override
++    public String toString() {
++        return "Customer{" +
++                "name='" + getName() + '\'' +
++                ", address='" + getAddress() + '\'' +
++                ", phoneNumber='" + getPhoneNumber() + '\'' +
++                '}';
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(getName(), getAddress(), getPhoneNumber());
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        Customer customer = (Customer) o;
++        return Objects.equals(getName(), customer.getName()) &&
++                Objects.equals(getAddress(), customer.getAddress()) &&
++                Objects.equals(getPhoneNumber(), customer.getPhoneNumber());
++    }
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Employee.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Employee.java b/src/main/java/laba/solvd/bankHierarchy/Employee.java
+new file mode 100644
+--- /dev/null	(date 1700221004242)
++++ b/src/main/java/laba/solvd/bankHierarchy/Employee.java	(date 1700221004242)
+@@ -0,0 +1,60 @@
++package laba.solvd.bankHierarchy;
++
++import java.util.Objects;
++
++public class Employee extends Person {
++
++    private int employeeId;
++    private Position position;
++
++    public Employee(String name, String address, String phoneNumber, Position position) {
++        super(name, address, phoneNumber);
++        this.position = position;
++    }
++
++
++    public int getEmployeeId() {
++        return employeeId;
++    }
++
++    public void setEmployeeId(int employeeId) {
++        this.employeeId = employeeId;
++    }
++
++    public Position getPosition() {
++        return position;
++    }
++
++    public void setPosition(Position position) {
++        this.position = position;
++    }
++
++    @Override
++    public String toString() {
++        return "Employee{" +
++                "name='" + getName() + '\'' +
++                ", address='" + getAddress() + '\'' +
++                ", phoneNumber='" + getPhoneNumber() + '\'' +
++                ", employeeId=" + getEmployeeId() +
++                ", position=" + getPosition() +
++                '}';
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(getName(), getAddress(), getPhoneNumber(), getEmployeeId(), getPosition());
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        Employee employee = (Employee) o;
++        return getEmployeeId() == employee.getEmployeeId() &&
++                Objects.equals(getName(), employee.getName()) &&
++                Objects.equals(getAddress(), employee.getAddress()) &&
++                Objects.equals(getPhoneNumber(), employee.getPhoneNumber()) &&
++                Objects.equals(getPosition(), employee.getPosition());
++    }
++
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Position.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Position.java b/src/main/java/laba/solvd/bankHierarchy/Position.java
+new file mode 100644
+--- /dev/null	(date 1700221004243)
++++ b/src/main/java/laba/solvd/bankHierarchy/Position.java	(date 1700221004243)
+@@ -0,0 +1,34 @@
++package laba.solvd.bankHierarchy;
++
++public class Position {
++    private String title;
++    private double salary;
++
++    public Position(String title, double salary) {
++        this.title = title;
++        this.salary = salary;
++    }
++
++    public String getTitle() {
++        return title;
++    }
++
++    public void setTitle(String positionName) {
++        this.title = positionName;
++    }
++
++    public double getSalary() {
++        return salary;
++    }
++
++    public void setSalary(double salary) {
++        this.salary = salary;
++    }
++
++    @Override
++    public String toString() {
++        return "'" + title + '\'' +
++                ", salary=" + salary +
++                '}';
++    }
++}
+Index: src/main/java/laba/solvd/bankHierarchy/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/Main.java b/src/main/java/laba/solvd/bankHierarchy/Main.java
+--- a/src/main/java/laba/solvd/bankHierarchy/Main.java	
++++ b/src/main/java/laba/solvd/bankHierarchy/Main.java	(date 1700222087627)
+@@ -1,32 +1,21 @@
+ package laba.solvd.bankHierarchy;
+ 
+-import laba.solvd.bankHierarchy.bankingcore.*;
+-import laba.solvd.bankHierarchy.exceptions.CustomerAlreadyExistsException;
+-import laba.solvd.bankHierarchy.exceptions.DuplicateAtmException;
+-import laba.solvd.bankHierarchy.exceptions.InsufficientFundsException;
+-import laba.solvd.bankHierarchy.exceptions.InvalidCustomerException;
+-import laba.solvd.bankHierarchy.financial.Account;
+-import laba.solvd.bankHierarchy.financial.Card;
+-import laba.solvd.bankHierarchy.people.Customer;
+-import laba.solvd.bankHierarchy.people.Employee;
+-import laba.solvd.bankHierarchy.people.Position;
+-
++import java.util.List;
++import java.util.ArrayList;
+ import java.util.Scanner;
+ 
+-import org.apache.logging.log4j.LogManager;
+-import org.apache.logging.log4j.Logger;
+-
+ public class Main {
+ 
+-    private static final Logger logger = LogManager.getLogger(Main.class);
+-    
+     public static void main(String[] args) {
++
++        Scanner scanner = new Scanner(System.in);
++
+         // Creating a bank
+         Bank bank = new Bank("Capital One");
+-        logger.info(bank);
++        System.out.println(bank);
+ 
+         // Creating branches
+-        Branch branch1 = new Branch("2134 N KnollWood Ave", 2);
++        Branch branch1 = new Branch("2134 N Knollwood Ave", 2);
+         Branch branch2 = new Branch("7898 W Delphia Ave", 3);
+ 
+         //Creating an ATM
+@@ -34,21 +23,17 @@
+         ATM atm2 = new ATM(987654432);
+ 
+         //Adding atms to the branch
+-        try {
+-            branch1.addAtms(atm1);
+-            branch1.addAtms(atm2);
+-        } catch (DuplicateAtmException e) {
+-            logger.info("Error adding ATM: " + e.getMessage());
+-        }
++        branch1.addAtms(atm1);
++        branch1.addAtms(atm2);
+ 
+         // Adding branches to the bank
+         bank.addBranch(branch1);
+         bank.addBranch(branch2);
+ 
+         // Creating an employee
+-        Employee employee = new Employee("Aya Mamat", "2134 N Knollwood Ave", "123-456-7890", new Position("Manager", 50000.0));
++        Employee employee = new Employee("Aika Mamat", "2134 N Knollwood Ave", "123-456-7890", new Position("Manager", 50000.0));
+         employee.setEmployeeId(1356888);
+-        logger.info(employee);
++        System.out.println(employee);
+ 
+         // Adding the employee to the bank
+         bank.addEmployee(employee);
+@@ -56,7 +41,7 @@
+         // Employee contact info being updated
+         employee.updateContactInfo("Angelina Jolie", "2368 W Agile Street", "555-555-5555");
+         employee.setEmployeeId(135698765);
+-        logger.info(employee);
++        System.out.println(employee);
+ 
+         // Creating an account and card
+         Account customerAccount1 = new Account("1234567890", 1000.0);
+@@ -64,83 +49,73 @@
+         Account customerAccount2 = new Account("1234567890", 1000.0);
+         Card customerCard2 = new Card("1234-5678-9012-3456", "12/25");
+ 
+-        // Creating customers using the shared account and card
++        // Create customers using the shared account and card
+         Customer customer1 = new Customer("Alice Wonder", "1234 NE Talman Ave", "987-654-3210", customerAccount1, customerCard1);
+         Customer customer2 = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210", customerAccount2, customerCard2);
+-        logger.info(customer1);
+-        logger.info(customer2);
++        System.out.println(customer1);
++        System.out.println(customer2);
++        boolean areEqual = customer1.equals(customer2);
+ 
+-        try {
+-            bank.addCustomer(customer1);
+-        } catch (CustomerAlreadyExistsException e) {
+-            logger.info("Error adding customer: " + e.getMessage());
+-        }
+-        Card card = new Card("2345678987654", "12/25");
+-        double paymentAmount = 100.0; // Set the payment amount as needed
++        // Making a payment using the card
++        double paymentAmount = 200.0;
++        customerCard1.makePayment(customer1, paymentAmount);
+ 
+-        try {
+-            card.makePayment(customer1, paymentAmount);
+-            logger.info("Payment successful.");
+-        } catch (InsufficientFundsException e) {
+-            System.out.println("Error: " + e.getMessage());
+-        } catch (InvalidCustomerException e) {
+-            logger.info("Error: " + e.getMessage());
++        // Print customer's transaction history
++        List<String> transactionHistory = customer1.getTransactionHistory();
++        System.out.println("Customer Transaction History:");
++        for (String transaction : transactionHistory) {
++            System.out.println(transaction);
+         }
+ 
+-        logger.info("=====================================================");
++
++        System.out.println("=====================================================");
++
++        System.out.println("Welcome to " + bank.getBankName() + "!");
+ 
+-        logger.info("Welcome to " + bank.getBankName() + "!");
+-        try (Scanner scanner = new Scanner(System.in)) {
+-            while (true) {
++
++        while (true) {
+ 
+-                logger.info("Select an option:");
+-                logger.info("1. Deposit");
+-                logger.info("2. Withdraw");
+-                logger.info("3. Check Balance");
+-                logger.info("4. Exit");
++            System.out.println("Select an option:");
++            System.out.println("1. Deposit");
++            System.out.println("2. Withdraw");
++            System.out.println("3. Check Balance");
++            System.out.println("4. Exit");
+ 
+-                int choice = scanner.nextInt();
++            int choice = scanner.nextInt();
+ 
+-                switch (choice) {
+-                    case 1:
+-                        // Deposit
+-                        logger.info("Enter the deposit amount: $");
+-                        double depositAmount = scanner.nextDouble();
+-                        atm1.deposit(customer1, depositAmount);
+-                        logger.info("Deposit successful.");
+-                        break;
++            switch (choice) {
++                case 1:
++                    // Deposit
++                    System.out.print("Enter the deposit amount: $");
++                    double depositAmount = scanner.nextDouble();
++                    atm1.deposit(customer1, depositAmount);
++                    System.out.println("Deposit successful.");
++                    break;
+ 
+-                    case 2:
+-                        // Withdrawal
+-                        logger.info("Enter the withdrawal amount: $");
+-                        double withdrawalAmount = scanner.nextDouble();
+-                        try {
+-                            atm1.withdrawCash(customer1, withdrawalAmount);
+-                            logger.info("Withdrawal successful.");
+-                        } catch (InsufficientFundsException e) {
+-                            logger.info("Error withdrawing cash: " + e.getMessage());
+-                        }
+-                        break;
++                case 2:
++                    // Withdrawal
++                    System.out.print("Enter the withdrawal amount: $");
++                    double withdrawAmount = scanner.nextDouble();
++                    atm1.withdrawCash(customer1, withdrawAmount);
++                    System.out.println("Withdrawal successful.");
++                    break;
+ 
+-                    case 3:
+-                        // Check Balance
+-                        double balance = customer1.getAccount().getAccountBalance();
+-                        logger.info("Your account balance: $" + balance);
+-                        break;
++                case 3:
++                    // Check Balance
++                    double balance = customer1.getAccount().getAccountBalance();
++                    System.out.println("Your account balance: $" + balance);
++                    break;
+ 
+-                    case 4:
+-                        // Press Exit
+-                        logger.info("Thank you for using " + bank.getBankName() + "!");
+-                        scanner.close();
+-                        System.exit(0);
++                case 4:
++                    // Press Exit
++                    System.out.println("Thank you for using " + bank.getBankName() + "!");
++                    scanner.close();
++                    System.exit(0);
+ 
+-                    default:
+-                        logger.info("Invalid choice. Please select a valid option.");
+-                }
++                default:
++                    System.out.println("Invalid choice. Please select a valid option.");
++            }
+ 
+-            }
+-        } catch (Exception e) {
+-            logger.info("An error occurred: " + e.getMessage());
+         }
+     }
+ }
+Index: src/main/java/laba/solvd/bankHierarchy/customLinkedList/CustomLinkedList.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/customLinkedList/CustomLinkedList.java b/src/main/java/laba/solvd/bankHierarchy/customLinkedList/CustomLinkedList.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/customLinkedList/CustomLinkedList.java	
++++ /dev/null	
+@@ -1,326 +0,0 @@
+-package laba.solvd.bankHierarchy.customLinkedList;
+-
+-import java.util.*;
+-import java.util.function.Consumer;
+-
+-public class CustomLinkedList<E> implements List<E> {
+-
+-    private Node<E> head;
+-    private int size;
+-
+-    public CustomLinkedList() {
+-        head = null;
+-        size = 0;
+-    }
+-
+-    @Override
+-    public Iterator<E> iterator() {
+-        return new CustomLinkedListIterator();
+-    }
+-
+-    @Override
+-    public Object[] toArray() {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    @Override
+-    public <T> T[] toArray(T[] a) {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    @Override
+-    public void forEach(Consumer<? super E> action) {
+-        List.super.forEach(action);
+-    }
+-
+-    @Override
+-    public Spliterator<E> spliterator() {
+-        return List.super.spliterator();
+-    }
+-
+-    public E remove(int index) {
+-        if (index < 0 || index >= size) {
+-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+-        }
+-
+-        if (index == 0) {
+-            E removedData = head.data;
+-            head = head.next;
+-            size--;
+-            return removedData;
+-        }
+-
+-        Node<E> current = head;
+-        Node<E> previous = null;
+-        int currentIndex = 0;
+-
+-        while (currentIndex < index) {
+-            previous = current;
+-            current = current.next;
+-            currentIndex++;
+-        }
+-
+-        E removedData = current.data;
+-        previous.next = current.next;
+-        size--;
+-        return removedData;
+-    }
+-
+-    @Override
+-    public int indexOf(Object o) {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    @Override
+-    public int lastIndexOf(Object o) {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    @Override
+-    public ListIterator<E> listIterator() {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    @Override
+-    public ListIterator<E> listIterator(int index) {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    @Override
+-    public List<E> subList(int fromIndex, int toIndex) {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    public void add(int index, E element) {
+-        if (index < 0 || index > size) {
+-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+-        }
+-
+-        Node<E> newNode = new Node<>(element);
+-
+-        if (index == 0) {
+-            newNode.next = head;
+-            head = newNode;
+-        } else {
+-            Node<E> current = head;
+-            Node<E> previous = null;
+-            int currentIndex = 0;
+-
+-            while (currentIndex < index) {
+-                previous = current;
+-                current = current.next;
+-                currentIndex++;
+-            }
+-
+-            newNode.next = current;
+-            previous.next = newNode;
+-        }
+-
+-        size++;
+-    }
+-
+-    public E set(int index, E element) {
+-        if (index < 0 || index >= size) {
+-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+-        }
+-
+-        Node<E> current = head;
+-        int currentIndex = 0;
+-
+-        while (currentIndex < index) {
+-            current = current.next;
+-            currentIndex++;
+-        }
+-
+-        E replacedData = current.data;
+-        current.data = element;
+-        return replacedData;
+-    }
+-
+-    public E get(int index) {
+-        if (index < 0 || index >= size) {
+-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+-        }
+-
+-        Node<E> current = head;
+-        int currentIndex = 0;
+-
+-        while (currentIndex < index) {
+-            current = current.next;
+-            currentIndex++;
+-        }
+-
+-        return current.data;
+-    }
+-
+-    public int hashCode() {
+-        return super.hashCode();
+-    }
+-
+-    public boolean equals(Object o) {
+-        return super.equals(o);
+-    }
+-
+-    public void clear() {
+-        head = null;
+-        size = 0;
+-    }
+-
+-    public boolean removeAll(Collection<?> c) {
+-        boolean modified = false;
+-        Node<E> current = head;
+-        Node<E> previous = null;
+-
+-        while (current != null) {
+-            if (c.contains(current.data)) {
+-                if (previous == null) {
+-                    head = current.next;
+-                } else {
+-                    previous.next = current.next;
+-                }
+-                modified = true;
+-                size--;
+-            } else {
+-                previous = current;
+-            }
+-            current = current.next;
+-
+-
+-        }
+-        return modified;
+-    }
+-
+-    @Override
+-    public boolean retainAll(Collection<?> c) {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    public boolean addAll(int index, Collection<? extends E> c) {
+-        if (index < 0 || index > size) {
+-            throw new IndexOutOfBoundsException("Invalid index: " + index);
+-        }
+-
+-        if (c.isEmpty()) {
+-            return false;
+-        }
+-
+-        Node<E> current = head;
+-        Node<E> previous = null;
+-        int currentIndex = 0;
+-
+-        while (currentIndex < index && current != null) {
+-            previous = current;
+-            current = current.next;
+-            currentIndex++;
+-        }
+-
+-        for (E element : c) {
+-            Node<E> newNode = new Node<>(element);
+-
+-            if (previous == null) {
+-                newNode.next = head;
+-                head = newNode;
+-            } else {
+-                newNode.next = current;
+-                previous.next = newNode;
+-            }
+-
+-            previous = newNode;
+-            size++;
+-        }
+-
+-        return true;
+-    }
+-
+-    public boolean containsAll(Collection<?> c) {
+-        for (Object element : c) {
+-            if (!contains(element)) {
+-                return false;
+-            }
+-        }
+-        return true;
+-    }
+-
+-    @Override
+-    public boolean addAll(Collection<? extends E> c) {
+-        throw new UnsupportedOperationException("Method not supported ");
+-    }
+-
+-    public boolean remove(Object o) {
+-        Node<E> current = head;
+-        Node<E> previous = null;
+-
+-        while (current != null) {
+-            if (o.equals(current.data)) {
+-                if (previous == null) {
+-                    head = current.next;
+-                } else {
+-                    previous.next = current.next;
+-                }
+-                size--;
+-                return true;
+-            }
+-            previous = current;
+-            current = current.next;
+-        }
+-        return false;
+-    }
+-
+-    public boolean add(E e) {
+-        add(size, e);
+-        return true;
+-    }
+-
+-    public boolean contains(Object o) {
+-        Node<E> current = head;
+-
+-        while (current != null) {
+-            if (o.equals(current.data)) {
+-                return true;
+-            }
+-            current = current.next;
+-        }
+-        return false;
+-    }
+-
+-    public boolean isEmpty() {
+-        return size == 0;
+-    }
+-
+-    public int size() {
+-        return size;
+-    }
+-
+-    private static class Node<E> {
+-        E data;
+-        Node<E> next;
+-
+-        Node(E element) {
+-            this.data = element;
+-            this.next = null;
+-        }
+-    }
+-
+-    private class CustomLinkedListIterator implements Iterator<E> {
+-        private Node<E> currentNode;
+-
+-        public CustomLinkedListIterator() {
+-            currentNode = head;
+-        }
+-
+-        @Override
+-        public boolean hasNext() {
+-            return currentNode != null;
+-        }
+-
+-        @Override
+-        public E next() {
+-            if (!hasNext()) {
+-                throw new NoSuchElementException();
+-            }
+-            E data = currentNode.data;
+-            currentNode = currentNode.next;
+-            return data;
+-        }
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/exceptions/DuplicateAtmException.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/exceptions/DuplicateAtmException.java b/src/main/java/laba/solvd/bankHierarchy/exceptions/DuplicateAtmException.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/exceptions/DuplicateAtmException.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package laba.solvd.bankHierarchy.exceptions;
+-
+-public class DuplicateAtmException extends Exception {
+-    public DuplicateAtmException(String message) {
+-        super(message);
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/exceptions/InsufficientFundsException.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/exceptions/InsufficientFundsException.java b/src/main/java/laba/solvd/bankHierarchy/exceptions/InsufficientFundsException.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/exceptions/InsufficientFundsException.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package laba.solvd.bankHierarchy.exceptions;
+-
+-public class InsufficientFundsException extends Exception {
+-    public InsufficientFundsException(String message) {
+-        super(message);
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/exceptions/LoanAuthorizationException.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/exceptions/LoanAuthorizationException.java b/src/main/java/laba/solvd/bankHierarchy/exceptions/LoanAuthorizationException.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/exceptions/LoanAuthorizationException.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package laba.solvd.bankHierarchy.exceptions;
+-
+-public class LoanAuthorizationException extends Exception {
+-    public LoanAuthorizationException(String msg) {
+-        super(msg);
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/exceptions/InvalidCustomerException.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/exceptions/InvalidCustomerException.java b/src/main/java/laba/solvd/bankHierarchy/exceptions/InvalidCustomerException.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/exceptions/InvalidCustomerException.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package laba.solvd.bankHierarchy.exceptions;
+-
+-public class InvalidCustomerException extends Exception {
+-    public InvalidCustomerException(String message) {
+-        super(message);
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/exceptions/CustomerAlreadyExistsException.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/exceptions/CustomerAlreadyExistsException.java b/src/main/java/laba/solvd/bankHierarchy/exceptions/CustomerAlreadyExistsException.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/exceptions/CustomerAlreadyExistsException.java	
++++ /dev/null	
+@@ -1,8 +0,0 @@
+-package laba.solvd.bankHierarchy.exceptions;
+-
+-public class CustomerAlreadyExistsException extends Exception {
+-    public CustomerAlreadyExistsException(String message) {
+-        super(message);
+-    }
+-
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/bankingcore/Bank.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/bankingcore/Bank.java b/src/main/java/laba/solvd/bankHierarchy/bankingcore/Bank.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/bankingcore/Bank.java	
++++ /dev/null	
+@@ -1,85 +0,0 @@
+-package laba.solvd.bankHierarchy.bankingcore;
+-
+-import laba.solvd.bankHierarchy.customLinkedList.CustomLinkedList;
+-import laba.solvd.bankHierarchy.exceptions.CustomerAlreadyExistsException;
+-import laba.solvd.bankHierarchy.people.Customer;
+-import laba.solvd.bankHierarchy.people.Employee;
+-
+-import java.util.*;
+-
+-public class Bank {
+-    private static final String bankName = "Chase";
+-    private final List<Branch> branches;
+-    private final Set<Customer> customers;
+-    private final CustomLinkedList<Employee> employees;
+-    private static final List<String> currencyList;
+-
+-    static {
+-        currencyList = new ArrayList<>();
+-        currencyList.add("USD");
+-        currencyList.add("EUR");
+-        currencyList.add("JPY");
+-    }
+-
+-    public Bank(String bankName) {
+-        branches = new ArrayList<>();
+-        customers = new HashSet<>();
+-        employees = new CustomLinkedList<>();
+-    }
+-
+-    public static List<String> getCurrencyList() {
+-        return currencyList;
+-    }
+-
+-    public String getBankName() {
+-        return bankName;
+-    }
+-
+-    public List<Branch> getBranches() {
+-        return branches;
+-    }
+-
+-    public void addBranch(Branch branch) {
+-        branches.add(branch);
+-    }
+-
+-    public Set<Customer> getCustomers() {
+-        return customers;
+-    }
+-
+-    public void addCustomer(Customer customer) throws CustomerAlreadyExistsException {
+-        if (customers.contains(customer)) {
+-            throw new CustomerAlreadyExistsException("Customer " + customer.getName() + " already exists in " + bankName);
+-        }
+-        customers.add(customer);
+-
+-    }
+-
+-    public CustomLinkedList<Employee> getEmployees() {
+-        return employees;
+-    }
+-
+-    public void addEmployee(Employee employee) {
+-        employees.add(employee);
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "Bank{" +
+-                "bankName='" + bankName + '\'' +
+-                '}';
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(bankName);
+-    }
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (this == o) return true;
+-        if (o == null || getClass() != o.getClass()) return false;
+-        Bank bank = (Bank) o;
+-        return Objects.equals(bankName, bankName);
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/bankingcore/Branch.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/bankingcore/Branch.java b/src/main/java/laba/solvd/bankHierarchy/bankingcore/Branch.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/bankingcore/Branch.java	
++++ /dev/null	
+@@ -1,65 +0,0 @@
+-package laba.solvd.bankHierarchy.bankingcore;
+-
+-
+-import laba.solvd.bankHierarchy.bankingcore.ATM;
+-import laba.solvd.bankHierarchy.exceptions.DuplicateAtmException;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Random;
+-
+-public class Branch {
+-    private String address;
+-    private final List<ATM> atms;
+-
+-    public Branch(String address, int numberOfATMs) {
+-        this.address = address;
+-        this.atms = new ArrayList<>();
+-
+-        for (int i = 0; i <= numberOfATMs; i++) {
+-            long atmCode = generateUniqueBarcode();
+-            ATM atm = new ATM(atmCode);
+-            atms.add(atm);
+-        }
+-    }
+-
+-    private long generateUniqueBarcode() {
+-        Random random = new Random();
+-        long barcode;
+-
+-        do {
+-            barcode = random.nextLong();  // Generate a random long value as the barcode
+-        } while (barcode < 0);  // Ensure the barcode is a non-negative number
+-
+-        return barcode;
+-    }
+-
+-    public String getAddress() {
+-        return address;
+-    }
+-
+-    public void setAddress(String address) {
+-        this.address = address;
+-    }
+-
+-    public List<ATM> getAtms() {
+-        return atms;
+-    }
+-
+-    public void addAtms(ATM atm) throws DuplicateAtmException {
+-        if (isATMCodeUnique(atm.getAtmCode())) {
+-            atms.add(atm);
+-        } else {
+-            throw new DuplicateAtmException("ATM code '" + atm.getAtmCode() + "' is not unique in branch " + address);
+-        }
+-    }
+-
+-    private boolean isATMCodeUnique(long atmCode) {
+-        for (ATM existingATM : atms) {
+-            if (existingATM.getAtmCode() == atmCode) {
+-                return false; // Not unique
+-            }
+-        }
+-        return true; // Unique
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/bankingcore/ATM.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/bankingcore/ATM.java b/src/main/java/laba/solvd/bankHierarchy/bankingcore/ATM.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/bankingcore/ATM.java	
++++ /dev/null	
+@@ -1,56 +0,0 @@
+-package laba.solvd.bankHierarchy.bankingcore;
+-
+-import laba.solvd.bankHierarchy.exceptions.InsufficientFundsException;
+-import laba.solvd.bankHierarchy.interfaces.IManageMoney;
+-import laba.solvd.bankHierarchy.people.Customer;
+-
+-public class ATM implements IManageMoney {
+-    private static final int maxWithdrawalAmount = 500;
+-    private long atmCode;
+-
+-    public ATM(long atmCode) {
+-        this.atmCode = atmCode;
+-    }
+-
+-    public long getAtmCode() {
+-        return atmCode;
+-    }
+-
+-    public void setAtmCode(long atmCode) {
+-        this.atmCode = atmCode;
+-    }
+-
+-    @Override
+-    public void checkBalance(Customer customer) {
+-        if (customer.getCard() != null && customer.getAccount() != null) {
+-            double accountBalance = customer.getAccount().getAccountBalance();
+-            System.out.println("ATM " + atmCode + " - Account Balance for " + customer.getName() + ": $" + accountBalance);
+-        } else {
+-            System.out.println("ATM " + atmCode + " - Unable to check balance. Invalid customer or card information.");
+-        }
+-    }
+-
+-    @Override
+-    public void withdrawCash(Customer customer, double amount) throws InsufficientFundsException {
+-        if (customer.getAccount() != null) {
+-            double accountBalance = customer.getAccount().getAccountBalance();
+-            if (accountBalance >= amount) {
+-                accountBalance -= amount;
+-                customer.getAccount().setAccountBalance(accountBalance);
+-                System.out.println(customer.getName() + " has withdrawn $" + amount + " from the atm " + atmCode);
+-            } else {
+-                throw new InsufficientFundsException("Insufficient funds for withdrawal");
+-            }
+-        }
+-    }
+-
+-    @Override
+-    public void deposit(Customer customer, double amount) {
+-        if (customer.getAccount() != null) {
+-            double accountBalance = customer.getAccount().getAccountBalance();
+-            accountBalance += amount;
+-            customer.getAccount().setAccountBalance(accountBalance);
+-            System.out.println(customer.getName() + " has deposited $" + amount + " into the atm " + atmCode);
+-        }
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/financial/Transaction.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/financial/Transaction.java b/src/main/java/laba/solvd/bankHierarchy/financial/Transaction.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/financial/Transaction.java	
++++ /dev/null	
+@@ -1,52 +0,0 @@
+-package laba.solvd.bankHierarchy.financial;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-public class Transaction {
+-    private static final List<Transaction> transactionList = new ArrayList<>();
+-    private String transactionType;
+-    private double amount;
+-    private String transactionDate;
+-
+-    public Transaction(String transactionType, double amount, String transactionDate) {
+-        this.transactionType = transactionType;
+-        this.amount = amount;
+-        this.transactionDate = transactionDate;
+-    }
+-
+-    public static List<Transaction> getTransactionList() {
+-        return transactionList;
+-    }
+-
+-    public String getTransactionType() {
+-        return transactionType;
+-    }
+-
+-    public void setTransactionType(String transactionType) {
+-        this.transactionType = transactionType;
+-    }
+-
+-    public double getAmount() {
+-        return amount;
+-    }
+-
+-    public void setAmount(double amount) {
+-        this.amount = amount;
+-    }
+-
+-    public String getTransactionDate() {
+-        return transactionDate;
+-    }
+-
+-    public void setTransactionDate(String transactionDate) {
+-        this.transactionDate = transactionDate;
+-    }
+-
+-    public void recordTransaction(Account account) {
+-        Transaction newTransaction = new Transaction(transactionType, amount, transactionDate);
+-        transactionList.add(newTransaction);
+-
+-    }
+-
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/financial/Card.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/financial/Card.java b/src/main/java/laba/solvd/bankHierarchy/financial/Card.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/financial/Card.java	
++++ /dev/null	
+@@ -1,44 +0,0 @@
+-package laba.solvd.bankHierarchy.financial;
+-
+-import laba.solvd.bankHierarchy.exceptions.InsufficientFundsException;
+-import laba.solvd.bankHierarchy.exceptions.InvalidCustomerException;
+-import laba.solvd.bankHierarchy.interfaces.ICard;
+-import laba.solvd.bankHierarchy.people.Customer;
+-
+-public class Card implements ICard {
+-    private static final String cardNumber = null;
+-    private String expirationDate;
+-    private int pin;
+-
+-    public Card(String cardNumber, String expirationDate) {
+-        this.expirationDate = expirationDate;
+-    }
+-
+-    public String getCardNumber() {
+-        return cardNumber;
+-    }
+-
+-    public String getExpirationDate() {
+-        return expirationDate;
+-    }
+-
+-    public void setExpirationDate(String expirationDate) {
+-        this.expirationDate = expirationDate;
+-    }
+-
+-    @Override
+-    public void makePayment(Customer customer, double amount) throws InsufficientFundsException, InvalidCustomerException {
+-        if (customer.getAccount() != null && customer.getAccount() != null) {
+-            double accountBalance = customer.getAccount().getAccountBalance();
+-            if (accountBalance >= amount) {
+-                accountBalance -= amount;
+-                customer.getAccount().setAccountBalance(accountBalance);
+-                System.out.println("Card " + cardNumber + " - Payment of $" + amount + " made for " + customer.getName());
+-            } else {
+-                throw new InsufficientFundsException("Card: " + cardNumber + " has insufficient funds for payment.");
+-            }
+-        } else {
+-            throw new InvalidCustomerException("Card " + cardNumber + " - Unable to make a payment. Invalid customer or account information.");
+-        }
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/financial/Account.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/financial/Account.java b/src/main/java/laba/solvd/bankHierarchy/financial/Account.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/financial/Account.java	
++++ /dev/null	
+@@ -1,28 +0,0 @@
+-package laba.solvd.bankHierarchy.financial;
+-
+-public class Account {
+-    private String accountNumber;
+-    private double accountBalance;
+-
+-    public Account(String accountNumber, double accountBalance) {
+-        this.accountNumber = accountNumber;
+-        this.accountBalance = accountBalance;
+-    }
+-
+-    public String getAccountNumber() {
+-        return accountNumber;
+-    }
+-
+-    public void setAccountNumber(String accountNumber) {
+-        this.accountNumber = accountNumber;
+-    }
+-
+-    public double getAccountBalance() {
+-        return accountBalance;
+-    }
+-
+-    public void setAccountBalance(double accountBalance) {
+-        this.accountBalance = accountBalance;
+-    }
+-
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/people/Person.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/people/Person.java b/src/main/java/laba/solvd/bankHierarchy/people/Person.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/people/Person.java	
++++ /dev/null	
+@@ -1,55 +0,0 @@
+-package laba.solvd.bankHierarchy.people;
+-
+-import laba.solvd.bankHierarchy.interfaces.IPerson;
+-
+-import java.util.Objects;
+-
+-public abstract class Person implements IPerson {
+-
+-    private String name;
+-    private String address;
+-    private String phoneNumber;
+-
+-    public Person(String name, String address, String phoneNumber) {
+-        this.name = name;
+-        this.address = address;
+-        this.phoneNumber = phoneNumber;
+-    }
+-
+-    public String getName() {
+-        return name;
+-    }
+-
+-    public void setName(String name) {
+-        this.name = name;
+-    }
+-
+-    public String getAddress() {
+-        return address;
+-    }
+-
+-    public void setAddress(String address) {
+-        this.address = address;
+-    }
+-
+-    public String getPhoneNumber() {
+-        return phoneNumber;
+-    }
+-
+-    public void setPhoneNumber(String phoneNumber) {
+-        this.phoneNumber = phoneNumber;
+-    }
+-
+-    @Override
+-    public String getContactInfo(String name, String address, String phoneNumber) {
+-        return "Name: " + name + ", Address: " + address + ", Phone Number: " + phoneNumber;
+-    }
+-
+-    @Override
+-    public void updateContactInfo(String name, String address, String phoneNumber) {
+-        this.name = name;
+-        this.address = address;
+-        this.phoneNumber = phoneNumber;
+-
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/people/Customer.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/people/Customer.java b/src/main/java/laba/solvd/bankHierarchy/people/Customer.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/people/Customer.java	
++++ /dev/null	
+@@ -1,80 +0,0 @@
+-package laba.solvd.bankHierarchy.people;
+-
+-import laba.solvd.bankHierarchy.financial.Account;
+-import laba.solvd.bankHierarchy.financial.Card;
+-import laba.solvd.bankHierarchy.interfaces.ICustomer;
+-
+-import java.util.Objects;
+-
+-public class Customer extends Person implements ICustomer {
+-
+-    private Account account;
+-    private Card card;
+-
+-    public Customer(String name, String address, String phoneNumber, Account account, Card card) {
+-        super(name, address, phoneNumber);
+-        this.account = account;
+-        this.card = card;
+-    }
+-
+-    public Account getAccount() {
+-        return account;
+-    }
+-
+-    public void setAccount(Account account) {
+-        this.account = account;
+-    }
+-
+-    public Card getCard() {
+-        return card;
+-    }
+-
+-    public void setCard(Card card) {
+-        this.card = card;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "Customer{" +
+-                "name='" + getName() + '\'' +
+-                ", address='" + getAddress() + '\'' +
+-                ", phoneNumber='" + getPhoneNumber() + '\'' +
+-                '}';
+-    }
+-
+-    @Override
+-    public void applyForLoan(String customerName, double loanAmount) {
+-
+-        if (loanAmount <= 0) {
+-            System.out.println("Invalid loan amount.Loan amount should be greater than 0.");
+-        } else if (loanAmount >= 100000) {
+-            System.out.println("Loan amount exceeds the maximum limit of $100000.");
+-        }
+-
+-        double interestRate = 0.05;
+-        double interest = loanAmount * interestRate;
+-        double totalAmount = loanAmount + interest;
+-
+-        System.out.println("Loan application for " + customerName + ":\n");
+-        System.out.println("Loan Amount: $" + loanAmount);
+-        System.out.println("Interest Rate: " + (interestRate * 100) + "%");
+-        System.out.println("Interest Amount: $" + interest);
+-        System.out.println("Total Amount Payable: $" + totalAmount);
+-
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(getName(), getAddress(), getPhoneNumber());
+-    }
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (this == o) return true;
+-        if (o == null || getClass() != o.getClass()) return false;
+-        Customer customer = (Customer) o;
+-        return Objects.equals(getName(), customer.getName()) &&
+-                Objects.equals(getAddress(), customer.getAddress()) &&
+-                Objects.equals(getPhoneNumber(), customer.getPhoneNumber());
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/people/Employee.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/people/Employee.java b/src/main/java/laba/solvd/bankHierarchy/people/Employee.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/people/Employee.java	
++++ /dev/null	
+@@ -1,84 +0,0 @@
+-package laba.solvd.bankHierarchy.people;
+-
+-import laba.solvd.bankHierarchy.exceptions.InvalidCustomerException;
+-import laba.solvd.bankHierarchy.exceptions.LoanAuthorizationException;
+-import laba.solvd.bankHierarchy.interfaces.IEmployee;
+-
+-import java.util.Objects;
+-
+-public class Employee extends Person implements IEmployee {
+-
+-    private int employeeId;
+-    private Position position;
+-
+-    public Employee(String name, String address, String phoneNumber, Position position) {
+-        super(name, address, phoneNumber);
+-        this.position = position;
+-    }
+-
+-    public int getEmployeeId() {
+-        return employeeId;
+-    }
+-
+-    public void setEmployeeId(int employeeId) {
+-        this.employeeId = employeeId;
+-    }
+-
+-    public Position getPosition() {
+-        return position;
+-    }
+-
+-    public void setPosition(Position position) {
+-        this.position = position;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "Employee{" +
+-                "name='" + getName() + '\'' +
+-                ", address='" + getAddress() + '\'' +
+-                ", phoneNumber='" + getPhoneNumber() + '\'' +
+-                ", employeeId=" + getEmployeeId() +
+-                ", position=" + getPosition() +
+-                '}';
+-    }
+-
+-    @Override
+-    public int hashCode() {
+-        return Objects.hash(getName(), getAddress(), getPhoneNumber(), getEmployeeId(), getPosition());
+-    }
+-
+-    @Override
+-    public boolean equals(Object o) {
+-        if (this == o) return true;
+-        if (o == null || getClass() != o.getClass()) return false;
+-        Employee employee = (Employee) o;
+-        return getEmployeeId() == employee.getEmployeeId() &&
+-                Objects.equals(getName(), employee.getName()) &&
+-                Objects.equals(getAddress(), employee.getAddress()) &&
+-                Objects.equals(getPhoneNumber(), employee.getPhoneNumber()) &&
+-                Objects.equals(getPosition(), employee.getPosition());
+-    }
+-
+-    @Override
+-    public void authorizeLoan(Customer customer, double amount) {
+-        try {
+-            if (customer != null && customer.getAccount() != null) {
+-                double currentBalance = customer.getAccount().getAccountBalance();
+-                double loanLimit = currentBalance * 2;
+-
+-                if (amount <= loanLimit) {
+-                    System.out.println("Loan authorized for " + customer.getName() + " amount: $" + amount);
+-                    currentBalance -= amount;
+-                    customer.getAccount().setAccountBalance(currentBalance);
+-                } else {
+-                    throw new LoanAuthorizationException("Loan amount exceeds the allowed limit.");
+-                }
+-            } else {
+-                throw new InvalidCustomerException("Invalid customer or account information.");
+-            }
+-        } catch (LoanAuthorizationException | InvalidCustomerException e) {
+-            System.out.println("Error: " + e.getMessage());
+-        }
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/people/Position.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/people/Position.java b/src/main/java/laba/solvd/bankHierarchy/people/Position.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/people/Position.java	
++++ /dev/null	
+@@ -1,34 +0,0 @@
+-package laba.solvd.bankHierarchy.people;
+-
+-public class Position {
+-    private String title;
+-    private double salary;
+-
+-    public Position(String title, double salary) {
+-        this.title = title;
+-        this.salary = salary;
+-    }
+-
+-    public String getTitle() {
+-        return title;
+-    }
+-
+-    public void setTitle(String positionName) {
+-        this.title = positionName;
+-    }
+-
+-    public double getSalary() {
+-        return salary;
+-    }
+-
+-    public void setSalary(double salary) {
+-        this.salary = salary;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "'" + title + '\'' +
+-                ", salary=" + salary +
+-                '}';
+-    }
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/interfaces/ICard.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/interfaces/ICard.java b/src/main/java/laba/solvd/bankHierarchy/interfaces/ICard.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/interfaces/ICard.java	
++++ /dev/null	
+@@ -1,9 +0,0 @@
+-package laba.solvd.bankHierarchy.interfaces;
+-
+-import laba.solvd.bankHierarchy.exceptions.InsufficientFundsException;
+-import laba.solvd.bankHierarchy.exceptions.InvalidCustomerException;
+-import laba.solvd.bankHierarchy.people.Customer;
+-
+-public interface ICard {
+-    void makePayment(Customer customer, double amount) throws InsufficientFundsException, InvalidCustomerException;
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/interfaces/IPerson.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/interfaces/IPerson.java b/src/main/java/laba/solvd/bankHierarchy/interfaces/IPerson.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/interfaces/IPerson.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package laba.solvd.bankHierarchy.interfaces;
+-
+-public interface IPerson {
+-    String getContactInfo(String name, String address, String phoneNumber);
+-
+-    void updateContactInfo(String name, String address, String phoneNumber);
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/interfaces/ICustomer.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/interfaces/ICustomer.java b/src/main/java/laba/solvd/bankHierarchy/interfaces/ICustomer.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/interfaces/ICustomer.java	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-package laba.solvd.bankHierarchy.interfaces;
+-
+-public interface ICustomer {
+-
+-    void applyForLoan(String customerName, double loanAmount);
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/interfaces/IEmployee.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/interfaces/IEmployee.java b/src/main/java/laba/solvd/bankHierarchy/interfaces/IEmployee.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/interfaces/IEmployee.java	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package laba.solvd.bankHierarchy.interfaces;
+-
+-import laba.solvd.bankHierarchy.people.Customer;
+-
+-public interface IEmployee {
+-    void authorizeLoan(Customer customer, double amount);
+-}
+Index: src/main/java/laba/solvd/bankHierarchy/interfaces/IManageMoney.java
+===================================================================
+diff --git a/src/main/java/laba/solvd/bankHierarchy/interfaces/IManageMoney.java b/src/main/java/laba/solvd/bankHierarchy/interfaces/IManageMoney.java
+deleted file mode 100644
+--- a/src/main/java/laba/solvd/bankHierarchy/interfaces/IManageMoney.java	
++++ /dev/null	
+@@ -1,12 +0,0 @@
+-package laba.solvd.bankHierarchy.interfaces;
+-
+-import laba.solvd.bankHierarchy.exceptions.InsufficientFundsException;
+-import laba.solvd.bankHierarchy.people.Customer;
+-
+-public interface IManageMoney {
+-    void checkBalance(Customer customer);
+-
+-    void deposit(Customer customer, double amount);
+-
+-    void withdrawCash(Customer customer, double amount) throws InsufficientFundsException;
+-}

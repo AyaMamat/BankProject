@@ -1,6 +1,7 @@
-package laba.solvd.bankHierarchy;
+package laba.solvd.bankHierarchy.financial;
 
 public class Account {
+
     private String accountNumber;
     private double accountBalance;
 
