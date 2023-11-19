@@ -1,5 +1,4 @@
-package laba.solvd.bankHierarchy;
-
+package laba.solvd.bankHierarchy.bankingcore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class Branch {
         return atms;
     }
 
-    public void addAtms(ATM atm) {
+    public void addAtms(ATM atm)  {
         atms.add(atm);
     }
 }
