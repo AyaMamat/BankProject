@@ -1,5 +1,7 @@
 package laba.solvd.bankHierarchy.bankingcore;
 
+import laba.solvd.bankHierarchy.exceptions.DuplicateAtmException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -42,7 +44,20 @@ public class Branch {
         return atms;
     }
 
-    public void addAtms(ATM atm)  {
-        atms.add(atm);
+    public void addAtms(ATM atm) throws DuplicateAtmException {
+        if (isATMCodeUnique(atm.getAtmCode())) {
+            atms.add(atm);
+        } else {
+            throw new DuplicateAtmException("ATM code '" + atm.getAtmCode() + "' is not unique in branch " + address);
+        }
+    }
+
+    private boolean isATMCodeUnique(long atmCode) {
+        for (ATM existingATM : atms) {
+            if (existingATM.getAtmCode() == atmCode) {
+                return false; // Not unique
+            }
+        }
+        return true; // Unique
     }
 }

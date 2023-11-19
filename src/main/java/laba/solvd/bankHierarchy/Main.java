@@ -16,6 +16,7 @@ import laba.solvd.bankHierarchy.people.Position;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -45,8 +46,9 @@ public class Main {
         }
 
         // Adding branches to the bank
-        bank.addBranch(branch1);
-        bank.addBranch(branch2);
+        for (Branch branch : Arrays.asList(branch1, branch2)) {
+            bank.addBranch(branch);
+        }
 
         // Creating an employee
         Employee employee = new Employee("Aya Mamat", "2134 N Knollwood Ave", "123-456-7890", new Position("Manager", 50000.0));
