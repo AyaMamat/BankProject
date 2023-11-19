@@ -1,11 +1,10 @@
 package laba.solvd.bankHierarchy.financial;
 
-import laba.solvd.bankHierarchy.Account;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Transaction {
+
     private static final List<Transaction> transactionList = new ArrayList<>();
     private String transactionType;
     private double amount;

@@ -8,11 +8,12 @@ import laba.solvd.bankHierarchy.people.Employee;
 import java.util.*;
 
 public class Bank {
+
     private static final String bankName = "Chase";
+    private static final List<String> currencyList;
     private final List<Branch> branches;
     private final Set<Customer> customers;
     private final CustomLinkedList<Employee> employees;
-    private static final List<String> currencyList;
 
     static {
         currencyList = new ArrayList<>();
@@ -69,7 +70,6 @@ public class Bank {
                 "bankName='" + bankName + '\'' +
                 '}';
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(bankName);

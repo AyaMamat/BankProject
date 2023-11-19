@@ -1,15 +1,13 @@
 package laba.solvd.bankHierarchy;
 
 
-import laba.solvd.bankHierarchy.exceptions.DuplicateAtmException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Branch {
     private String address;
-    private final List<ATM> atms;
+    private List<ATM> atms;
 
     public Branch(String address, int numberOfATMs) {
         this.address = address;
@@ -45,21 +43,7 @@ public class Branch {
         return atms;
     }
 
-
-    public void addAtms(ATM atm) throws DuplicateAtmException {
-        if (isATMCodeUnique(atm.getAtmCode())) {
-            atms.add(atm);
-        } else {
-            throw new DuplicateAtmException("ATM code '" + atm.getAtmCode() + "' is not unique in branch " + address);
-        }
-    }
-
-    private boolean isATMCodeUnique(long atmCode) {
-        for (ATM existingATM : atms) {
-            if (existingATM.getAtmCode() == atmCode) {
-                return false; // Not unique
-            }
-        }
-        return true; // Unique
+    public void addAtms(ATM atm) {
+        atms.add(atm);
     }
 }
