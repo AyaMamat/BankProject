@@ -27,8 +27,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "'" + title + '\'' +
-                ", salary=" + salary +
-                '}';
+        return "'" + title + '\'' + ", salary=" + salary + '}';
     }
 }

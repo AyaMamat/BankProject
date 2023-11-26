@@ -67,9 +67,7 @@ public class Bank {
 
     @Override
     public String toString() {
-        return "Bank{" +
-                "bankName='" + bankName + '\'' +
-                '}';
+        return "Bank{" + "bankName='" + bankName + '\'' + '}';
     }
 
     @Override

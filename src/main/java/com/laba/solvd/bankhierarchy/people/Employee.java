@@ -37,13 +37,7 @@ public class Employee extends Person implements IEmployee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "name='" + getName() + '\'' +
-                ", address='" + getAddress() + '\'' +
-                ", phoneNumber='" + getPhoneNumber() + '\'' +
-                ", employeeId=" + getEmployeeId() +
-                ", position=" + getPosition() +
-                '}';
+        return "Employee{" + "name='" + getName() + '\'' + ", address='" + getAddress() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", employeeId=" + getEmployeeId() + ", position=" + getPosition() + '}';
     }
 
     @Override
@@ -56,11 +50,7 @@ public class Employee extends Person implements IEmployee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return getEmployeeId() == employee.getEmployeeId() &&
-                Objects.equals(getName(), employee.getName()) &&
-                Objects.equals(getAddress(), employee.getAddress()) &&
-                Objects.equals(getPhoneNumber(), employee.getPhoneNumber()) &&
-                Objects.equals(getPosition(), employee.getPosition());
+        return getEmployeeId() == employee.getEmployeeId() && Objects.equals(getName(), employee.getName()) && Objects.equals(getAddress(), employee.getAddress()) && Objects.equals(getPhoneNumber(), employee.getPhoneNumber()) && Objects.equals(getPosition(), employee.getPosition());
     }
 
     @Override

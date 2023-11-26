@@ -37,11 +37,7 @@ public class Customer extends Person implements ICustomer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "name='" + getName() + '\'' +
-                ", address='" + getAddress() + '\'' +
-                ", phoneNumber='" + getPhoneNumber() + '\'' +
-                '}';
+        return "Customer{" + "name='" + getName() + '\'' + ", address='" + getAddress() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + '}';
     }
 
     @Override
@@ -74,8 +70,6 @@ public class Customer extends Person implements ICustomer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(getName(), customer.getName()) &&
-                Objects.equals(getAddress(), customer.getAddress()) &&
-                Objects.equals(getPhoneNumber(), customer.getPhoneNumber());
+        return Objects.equals(getName(), customer.getName()) && Objects.equals(getAddress(), customer.getAddress()) && Objects.equals(getPhoneNumber(), customer.getPhoneNumber());
     }
 }

@@ -22,7 +22,7 @@ public class Files {
             File file = new File(locationOfFile);
             LOGGER.info("Write your text here: ");
             String text = input.nextLine();
-            FileUtils.writeStringToFile(file,text,"UTF-8");
+            FileUtils.writeStringToFile(file, text, "UTF-8");
             LOGGER.info("Words written to file successfully.");
             String[] words = StringUtils.split(text);
             Set<String> uniqueWords = new HashSet<>(Arrays.asList(words));
