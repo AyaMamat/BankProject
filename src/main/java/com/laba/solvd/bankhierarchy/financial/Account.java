@@ -1,7 +1,6 @@
 package com.laba.solvd.bankhierarchy.financial;
 
 public class Account {
-
     private String accountNumber;
     private double accountBalance;
 
@@ -25,5 +24,4 @@ public class Account {
     public void setAccountBalance(double accountBalance) {
         this.accountBalance = accountBalance;
     }
-
 }

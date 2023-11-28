@@ -8,9 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ATM implements IManageMoney {
     private static final Logger LOGGER = LogManager.getLogger(ATM.class);
-
     private static final int MAX_WITHDRAWAL_AMOUNT = 500;
-
     private long atmCode;
 
     public ATM(long atmCode) {

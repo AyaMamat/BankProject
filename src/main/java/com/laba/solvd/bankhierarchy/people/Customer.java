@@ -57,7 +57,6 @@ public class Customer extends Person implements ICustomer {
         LOGGER.info("Interest Rate: " + (interestRate * 100) + "%");
         LOGGER.info("Interest Amount: $" + interest);
         LOGGER.info("Total Amount Payable: $" + totalAmount);
-
     }
 
     @Override

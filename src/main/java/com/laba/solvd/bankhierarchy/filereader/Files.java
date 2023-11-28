@@ -35,5 +35,4 @@ public class Files {
             LOGGER.error("An error occurred!", e);
         }
     }
-
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transaction {
-
     private static final List<Transaction> transactionList = new ArrayList<>();
     private String transactionType;
     private double amount;
@@ -47,7 +46,5 @@ public class Transaction {
     public void recordTransaction(Account account) {
         Transaction newTransaction = new Transaction(transactionType, amount, transactionDate);
         transactionList.add(newTransaction);
-
     }
-
 }

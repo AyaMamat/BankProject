@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class CustomLinkedList<E> implements List<E> {
-
     private Node<E> head;
     private int size;
 
@@ -149,7 +148,6 @@ public class CustomLinkedList<E> implements List<E> {
             current = current.next;
             currentIndex++;
         }
-
         return current.data;
     }
 
@@ -184,8 +182,6 @@ public class CustomLinkedList<E> implements List<E> {
                 previous = current;
             }
             current = current.next;
-
-
         }
         return modified;
     }
@@ -228,7 +224,6 @@ public class CustomLinkedList<E> implements List<E> {
             previous = newNode;
             size++;
         }
-
         return true;
     }
 
@@ -290,5 +285,4 @@ public class CustomLinkedList<E> implements List<E> {
     public int size() {
         return size;
     }
-
 }

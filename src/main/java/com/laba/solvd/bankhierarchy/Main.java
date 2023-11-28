@@ -19,13 +19,11 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-
         // Creating a bank
-        Bank bank = new Bank("Capital One");
+        Bank bank = new Bank("Chase");
         LOGGER.info(bank);
 
         // Creating branches
@@ -96,7 +94,6 @@ public class Main {
         LOGGER.info("Welcome to " + bank.getBankName() + "!");
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
-
                 LOGGER.info("Select an option:");
                 LOGGER.info("1. Deposit");
                 LOGGER.info("2. Withdraw");
@@ -141,7 +138,6 @@ public class Main {
                     default:
                         LOGGER.info("Invalid choice. Please select a valid option.");
                 }
-
             }
         } catch (Exception e) {
             LOGGER.info("An error occurred: " + e.getMessage());

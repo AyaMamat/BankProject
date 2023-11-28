@@ -8,8 +8,7 @@ import com.laba.solvd.bankhierarchy.people.Employee;
 import java.util.*;
 
 public class Bank {
-
-    private static final String bankName = "Chase";
+    private final String bankName;
     private static final List<String> currencyList;
 
     static {
@@ -24,6 +23,7 @@ public class Bank {
     private final CustomLinkedList<Employee> employees;
 
     public Bank(String bankName) {
+        this.bankName=bankName;
         branches = new ArrayList<>();
         customers = new HashSet<>();
         employees = new CustomLinkedList<>();
@@ -54,7 +54,6 @@ public class Bank {
             throw new CustomerAlreadyExistsException("Customer " + customer.getName() + " already exists in " + bankName);
         }
         customers.add(customer);
-
     }
 
     public CustomLinkedList<Employee> getEmployees() {

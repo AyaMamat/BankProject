@@ -24,5 +24,4 @@ public class CustomLinkedListIterator<E> implements Iterator<E> {
         currentNode = currentNode.next;
         return data;
     }
-
 }

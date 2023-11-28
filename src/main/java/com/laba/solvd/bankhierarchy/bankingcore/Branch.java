@@ -28,7 +28,6 @@ public class Branch {
         do {
             barcode = random.nextLong();  // Generate a random long value as the barcode
         } while (barcode < 0);  // Ensure the barcode is a non-negative number
-
         return barcode;
     }
 
