@@ -21,7 +21,11 @@ public class Reflection {
     public static void reflection() {
 
         try {
-            Customer customer = new Customer("Kayla Kobe", "1234 Quentin Rd", "123 455 6664");
+            Customer myCustomer = new Customer("Kayla Kobe", "1234 Quentin Rd", "123 455 6664");
+
+            Class customer=myCustomer.getClass();
+            LOGGER.info("Customer class name");
+            LOGGER.info("<<<<CLASS NAME>>>>>>"+customer.getName()+ "-->>"+Modifier.toString(customer.getModifiers()));
 
             LOGGER.info("<<<<<<<<<<FIELDS>>>>>>>>>>>>>");
             List<Field> customerFields = Arrays.asList(customer.getClass().getDeclaredFields());
