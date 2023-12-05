@@ -45,6 +45,13 @@ public class Bank {
         return branches;
     }
 
+    public List<Branch> filterBranchesByAddress(){
+        return branches.stream()
+                .filter(branch ->branch.getAddress().contains("Chicago"))
+                .collect(Collectors.toList());
+
+    }
+
     public void addBranch(Branch branch) {
         branches.add(branch);
     }

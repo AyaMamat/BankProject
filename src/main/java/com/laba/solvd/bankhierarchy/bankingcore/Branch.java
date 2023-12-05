@@ -15,9 +15,13 @@ public class Branch {
 
     public Branch(String address, int numberOfATMs) {
         this.address = address;
-        this.atms = IntStream.range(0, numberOfATMs)
-                .mapToObj(i -> new ATM(generateUniqueBarcode()))
-                .collect(Collectors.toList());
+        this.atms = new ArrayList<>();
+
+        for (int i = 0; i <= numberOfATMs; i++) {
+            long atmCode = generateUniqueBarcode();
+            ATM atm = new ATM(atmCode);
+            atms.add(atm);
+        }
     }
 
     private long generateUniqueBarcode() {
