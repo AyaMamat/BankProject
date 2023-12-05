@@ -20,6 +20,7 @@ import com.laba.solvd.bankhierarchy.people.Position;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -64,8 +65,8 @@ public class Main {
         Account aliceAccount = new Account("1234567890", 1000.0,AccountType.SAVINGS);
         Card aliceCard = new Card("1234-5678-9012-3456", "12/25",CardType.CREDIT);
 
-        Customer customerAlice = new Customer("Alice Wonder", "1234 NE Talman Ave", "987-654-3210", aliceAccount, aliceCard);
-        Customer customerBob = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210", bobAccount, bobCard);
+        Customer customerAlice = new Customer("Alice Wonder", "1234 NE Talman Ave", "987-654-3210");
+        Customer customerBob = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210");
         LOGGER.info(customerAlice);
         LOGGER.info(customerBob);
 
@@ -89,6 +90,11 @@ public class Main {
 
         Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, 1000.0, "2023-01-01");
         LOGGER.info("Transaction type: "+depositTransaction.getTransactionType()+" Amount: "+depositTransaction.getAmount()+ " Transaction date: "+depositTransaction.getTransactionDate());
+        Field [] transactionFields=depositTransaction.getClass().getDeclaredFields();
+
+        for(Field field : transactionFields){
+            LOGGER.info(field.getName());
+        }
 
         LOGGER.info("=====================================================");
 

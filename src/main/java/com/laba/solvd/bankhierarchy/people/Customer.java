@@ -15,10 +15,8 @@ public class Customer extends Person implements ICustomer {
     private Account account;
     private Card card;
 
-    public Customer(String name, String address, String phoneNumber, Account account, Card card) {
+    public Customer(String name, String address, String phoneNumber) {
         super(name, address, phoneNumber);
-        this.account = account;
-        this.card = card;
     }
 
     public Account getAccount() {
