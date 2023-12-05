@@ -26,7 +26,7 @@ public class Reflection {
             Class customer=myCustomer.getClass();
             LOGGER.info("Customer class name");
             LOGGER.info("<<<<CLASS NAME>>>>>>"+customer.getName()+ "-->>"+Modifier.toString(customer.getModifiers()));
-
+            List<Class> customerInterfaces=Arrays.asList(customer.getInterfaces());
             LOGGER.info("<<<<<<<<<<FIELDS>>>>>>>>>>>>>");
             List<Field> customerFields = Arrays.asList(customer.getClass().getDeclaredFields());
             customerFields.stream()

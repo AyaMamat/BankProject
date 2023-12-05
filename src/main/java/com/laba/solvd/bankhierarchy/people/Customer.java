@@ -23,7 +23,7 @@ public class Customer extends Person implements ICustomer {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void addAccount(Account account) {
         this.account = account;
     }
 
@@ -31,7 +31,7 @@ public class Customer extends Person implements ICustomer {
         return card;
     }
 
-    public void setCard(Card card) {
+    public void addCard(Card card) {
         this.card = card;
     }
 

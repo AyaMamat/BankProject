@@ -2,13 +2,15 @@ package com.laba.solvd.bankhierarchy.financial;
 
 import com.laba.solvd.bankhierarchy.enums.TransactionType;
 
+import java.util.Date;
+
 public class Transaction {
 
     private TransactionType transactionType;
     private double amount;
-    private String transactionDate;
+    private Date transactionDate;
 
-    public Transaction(TransactionType transactionType, double amount, String transactionDate) {
+    public Transaction(TransactionType transactionType, double amount, Date transactionDate) {
         this.transactionType = transactionType;
         this.amount = amount;
         this.transactionDate = transactionDate;
@@ -31,11 +33,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getTransactionDate() {
+    public Date getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(String transactionDate) {
+    public void setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
     }
 }

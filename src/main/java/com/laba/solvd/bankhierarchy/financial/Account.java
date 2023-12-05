@@ -42,6 +42,10 @@ public class Account {
         return new ArrayList<>(cardList);
     }
 
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
     public List<Card> filterCardByType(CardType cardType) {
         return cardList.stream()
                 .filter(transaction -> transaction.getCardType().equals(cardType))

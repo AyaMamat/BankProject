@@ -4,6 +4,7 @@ import com.laba.solvd.bankhierarchy.exceptions.InsufficientFundsException;
 import com.laba.solvd.bankhierarchy.exceptions.InvalidCustomerException;
 import com.laba.solvd.bankhierarchy.people.Customer;
 
+@FunctionalInterface
 public interface ICard {
 
     void makePayment(Customer customer, double amount) throws InsufficientFundsException, InvalidCustomerException;

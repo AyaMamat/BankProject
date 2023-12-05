@@ -1,7 +1,6 @@
 package com.laba.solvd.bankhierarchy.filereader;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,14 +8,18 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class Files {
+public class UniqueWordsFileReader {
 
-    private static final Logger LOGGER = LogManager.getLogger(Files.class);
+    private static final Logger LOGGER = LogManager.getLogger(UniqueWordsFileReader.class);
 
     public static void main(String[] args) {
 
-        String pathIn = "src/main/resources/fileInput.txt";
-        String pathOut = "src/main/resources/fileOutput.txt";
+        Scanner scan=new Scanner(System.in);
+        LOGGER.info("Enter input file path");
+        String pathIn = scan.next();//src/main/resources/fileInput.txt
+
+        LOGGER.info("Enter output file path");
+        String pathOut = scan.next();//src/main/resources/fileOutput.txt
         File inFile = new File(pathIn);
         File outFile = new File(pathOut);
 

@@ -19,7 +19,7 @@ public class Bank {
     private GenericLinkedList<Employee> employees;
 
     static {
-        currencyList = new ArrayList<Currency>();
+        currencyList = new ArrayList<>();
         currencyList.add(Currency.USD);
         currencyList.add(Currency.EUR);
         currencyList.add(Currency.GBP);
@@ -44,9 +44,9 @@ public class Bank {
         return branches;
     }
 
-    public List<Branch> filterBranchesByAddress(){
+    public List<Branch> filterBranchesByAddress(String city){
         return branches.stream()
-                .filter(branch ->branch.getAddress().contains("Chicago"))
+                .filter(branch ->branch.getAddress().contains(city))
                 .peek(branch -> System.out.println(branch))
                 .collect(Collectors.toList());
 
@@ -97,6 +97,6 @@ public class Bank {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bank bank = (Bank) o;
-        return Objects.equals(bankName, bankName);
+        return Objects.equals(bank.bankName, bankName);
     }
 }

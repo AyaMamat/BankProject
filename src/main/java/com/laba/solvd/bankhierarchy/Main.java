@@ -69,9 +69,15 @@ public class Main {
         customers.add(customerAlice);
         customers.add(customerBob);
 
+        customerAlice.addAccount(aliceAccount);
+        customerBob.addAccount(bobAccount);
+
         List<Account> accounts=new ArrayList<>();
         accounts.add(bobAccount);
         accounts.add(aliceAccount);
+
+        bobAccount.addCard(bobCard);
+        aliceAccount.addCard(aliceCard);
 
         List<Card> cardList=new ArrayList<>();
         cardList.add(bobCard);
