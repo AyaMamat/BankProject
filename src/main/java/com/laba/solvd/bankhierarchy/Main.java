@@ -16,13 +16,10 @@ import com.laba.solvd.bankhierarchy.financial.Card;
 import com.laba.solvd.bankhierarchy.financial.Transaction;
 import com.laba.solvd.bankhierarchy.people.Customer;
 import com.laba.solvd.bankhierarchy.people.Employee;
-import com.laba.solvd.bankhierarchy.people.Position;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -50,31 +47,49 @@ public class Main {
             bank.addBranch(branch);
         }
 
-        Employee employee = new Employee("Aya Mamat", "2134 N KnollWood Ave", "123-456-7890", new Position(JobTitle.MANAGER));
+        Employee employee = new Employee("Aya Mamat", "2134 N KnollWood Ave", "123-456-7890",JobTitle.MANAGER);
         employee.setEmployeeId(1356888);
         bank.addEmployee(employee);
-        employee.getPosition();
         LOGGER.info(employee);
 
         employee.updateContactInfo("Angelina Jolie", "2368 W Agile Street", "555-555-5555");
         employee.setEmployeeId(135698765);
         LOGGER.info(employee);
 
-        Account bobAccount = new Account("1234567890", 1000.0, AccountType.CHECKING);
-        Card bobCard = new Card("1234-5678-9012-3456", "12/25", CardType.DEBIT);
-        Account aliceAccount = new Account("1234567890", 1000.0,AccountType.SAVINGS);
-        Card aliceCard = new Card("1234-5678-9012-3456", "12/25",CardType.CREDIT);
-
         Customer customerAlice = new Customer("Alice Wonder", "1234 NE Talman Ave", "987-654-3210");
         Customer customerBob = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210");
-        LOGGER.info(customerAlice);
-        LOGGER.info(customerBob);
+
+        Account bobAccount = new Account("1234567890", 1000.0, AccountType.CHECKING);
+        Account aliceAccount = new Account("1234567890", 1000.0,AccountType.SAVINGS);
+
+        Card bobCard = new Card("1234-5678-9012-3456", "12/25", CardType.DEBIT);
+        Card aliceCard = new Card("1234-5678-9012-3456", "12/25",CardType.CREDIT);
+
+        List<Customer> customers=new ArrayList<>();
+        customers.add(customerAlice);
+        customers.add(customerBob);
+
+        List<Account> accounts=new ArrayList<>();
+        accounts.add(bobAccount);
+        accounts.add(aliceAccount);
+
+        List<Card> cardList=new ArrayList<>();
+        cardList.add(bobCard);
+        cardList.add(aliceCard);
 
         try {
-            bank.addCustomer(customerAlice);
+            for (Customer customer : customers) {
+                bank.addCustomer(customer);
+            }
+
         } catch (CustomerAlreadyExistsException e) {
-            LOGGER.info("Error adding customer: " + e.getMessage());
+            e.printStackTrace();
         }
+
+        Set<Customer>filteredCustomers = bank.filterCustomer(AccountType.SAVINGS);
+        LOGGER.info("Filtered customers");
+        filteredCustomers.forEach(System.out::println);
+
 
         Card card = new Card("2345678987654", "12/25",CardType.DEBIT);
         double paymentAmount = 100.0;
@@ -90,11 +105,6 @@ public class Main {
 
         Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, 1000.0, "2023-01-01");
         LOGGER.info("Transaction type: "+depositTransaction.getTransactionType()+" Amount: "+depositTransaction.getAmount()+ " Transaction date: "+depositTransaction.getTransactionDate());
-        Field [] transactionFields=depositTransaction.getClass().getDeclaredFields();
-
-        for(Field field : transactionFields){
-            LOGGER.info(field.getName());
-        }
 
         LOGGER.info("=====================================================");
 

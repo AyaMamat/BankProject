@@ -48,6 +48,7 @@ public class Bank {
     public List<Branch> filterBranchesByAddress(){
         return branches.stream()
                 .filter(branch ->branch.getAddress().contains("Chicago"))
+                .peek(branch -> System.out.println(branch))
                 .collect(Collectors.toList());
 
     }
@@ -76,7 +77,10 @@ public class Bank {
     }
 
     public Set<Customer> filterCustomer(AccountType accountType){
-        return customers.stream().filter(customer -> customer.getAccount().equals(accountType)).collect(Collectors.toSet());
+        return customers.stream()
+                .filter(customer -> customer.getAccount().equals(accountType))
+                .peek(customer -> System.out.println(customer))
+                .collect(Collectors.toSet());
     }
 
     @Override

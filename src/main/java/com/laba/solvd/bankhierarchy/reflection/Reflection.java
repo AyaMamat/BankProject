@@ -25,15 +25,18 @@ public class Reflection {
 
             LOGGER.info("<<<<<<<<<<FIELDS>>>>>>>>>>>>>");
             List<Field> customerFields = Arrays.asList(customer.getClass().getDeclaredFields());
-            customerFields.stream().forEach(field -> LOGGER.info(field.getName() + " -->> " + Modifier.toString(field.getModifiers())));
+            customerFields.stream()
+                    .forEach(field -> LOGGER.info(field.getName() + " -->> " + Modifier.toString(field.getModifiers())));
 
             LOGGER.info("<<<<<<<<<<METHODS>>>>>>>>>>>>>>");
             List<Method> customerMethods = Arrays.asList(customer.getClass().getDeclaredMethods());
-            customerMethods.stream().forEach(method -> LOGGER.info(method.getName() + " -->> " + Modifier.toString(method.getModifiers())));
+            customerMethods.stream()
+                    .forEach(method -> LOGGER.info(method.getName() + " -->> " + Modifier.toString(method.getModifiers())));
 
             LOGGER.info("<<<<<<<<<<CONSTRUCTORS>>>>>>>>>>>>>>");
             List<Constructor> customerConstructors = Arrays.asList(customer.getClass().getDeclaredConstructors());
-            customerConstructors.stream().forEach(constructor -> LOGGER.info(constructor.getName() + " -->> " + Modifier.toString(constructor.getModifiers())));
+            customerConstructors.stream()
+                    .forEach(constructor -> LOGGER.info(constructor.getName() + " -->> " + Modifier.toString(constructor.getModifiers())));
 
         } catch (Exception e) {
             LOGGER.error("Error has occurred");

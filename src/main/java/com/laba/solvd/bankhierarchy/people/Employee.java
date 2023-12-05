@@ -1,6 +1,8 @@
 package com.laba.solvd.bankhierarchy.people;
 
 import com.laba.solvd.bankhierarchy.bankingcore.ATM;
+import com.laba.solvd.bankhierarchy.enums.CardType;
+import com.laba.solvd.bankhierarchy.enums.JobTitle;
 import com.laba.solvd.bankhierarchy.exceptions.InvalidCustomerException;
 import com.laba.solvd.bankhierarchy.exceptions.LoanAuthorizationException;
 import com.laba.solvd.bankhierarchy.interfaces.IEmployee;
@@ -13,11 +15,11 @@ public class Employee extends Person implements IEmployee {
 
     private static final Logger LOGGER = LogManager.getLogger(Employee.class);
     private int employeeId;
-    private Position position;
+    private JobTitle jobTitle;
 
-    public Employee(String name, String address, String phoneNumber, Position position) {
+    public Employee(String name, String address, String phoneNumber, JobTitle jobTitle) {
         super(name, address, phoneNumber);
-        this.position = position;
+        this.jobTitle = jobTitle;
     }
 
     public int getEmployeeId() {
@@ -26,14 +28,6 @@ public class Employee extends Person implements IEmployee {
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     @Override
@@ -57,24 +51,4 @@ public class Employee extends Person implements IEmployee {
             LOGGER.info("Error: " + e.getMessage());
         }
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getAddress(), getPhoneNumber(), getEmployeeId(), getPosition());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return getEmployeeId() == employee.getEmployeeId() && Objects.equals(getName(), employee.getName()) && Objects.equals(getAddress(), employee.getAddress()) && Objects.equals(getPhoneNumber(), employee.getPhoneNumber()) && Objects.equals(getPosition(), employee.getPosition());
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" + "name='" + getName() + '\'' + ", address='" + getAddress() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", employeeId=" + getEmployeeId() + ", position=" + getPosition() + '}';
-    }
-
-
 }

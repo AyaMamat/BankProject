@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -99,6 +100,7 @@ public class Card implements ICard {
     public List<Transaction> filterTransactionsByType(TransactionType transactionType) {
         return transactionList.stream()
                 .filter(transaction -> transaction.getTransactionType() == transactionType)
+                .sorted(Comparator.comparing(Transaction::getTransactionDate))
                 .collect(Collectors.toList());
     }
 }
