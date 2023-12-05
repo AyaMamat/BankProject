@@ -1,6 +1,7 @@
 package com.laba.solvd.bankhierarchy.enums;
 
 public enum TransactionType {
+
     DEPOSIT("Deposit"),
     WITHDRAWAL("Withdrawal"),
     TRANSFER("Transfer");

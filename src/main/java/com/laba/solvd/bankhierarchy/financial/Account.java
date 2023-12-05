@@ -16,9 +16,7 @@ public class Account {
     private List<Card> cardList = new ArrayList<>();
     private AccountType accountType;
 
-
     public Account(String accountNumber, double accountBalance, AccountType accountType) {
-
         this.accountNumber = accountNumber;
         this.accountBalance = accountBalance;
         this.accountType=accountType;

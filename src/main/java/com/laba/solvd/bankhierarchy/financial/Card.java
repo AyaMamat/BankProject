@@ -45,7 +45,6 @@ public class Card implements ICard {
         this.cardType = cardType;
     }
 
-
     public String getCardNumber() {
         return cardNumber;
     }
@@ -97,6 +96,7 @@ public class Card implements ICard {
         Transaction newTransaction = new Transaction(transactionType, amount, transactionDate);
         transactionList.add(newTransaction);
     }
+
     public List<Transaction> filterTransactionsByType(TransactionType transactionType) {
         return transactionList.stream()
                 .filter(transaction -> transaction.getTransactionType() == transactionType)

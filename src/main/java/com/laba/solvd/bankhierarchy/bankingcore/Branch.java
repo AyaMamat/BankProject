@@ -5,8 +5,6 @@ import com.laba.solvd.bankhierarchy.exceptions.DuplicateAtmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Branch {
 
@@ -29,7 +27,6 @@ public class Branch {
         long barcode = Math.abs(random.nextLong());
         return barcode;
     }
-    // I read that random might print negative numbers too,that's why I am using Math.abs instead of do while loop to make sure to print only positive numbers.
 
     public String getAddress() {
         return address;

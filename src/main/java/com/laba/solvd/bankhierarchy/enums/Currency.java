@@ -1,6 +1,7 @@
 package com.laba.solvd.bankhierarchy.enums;
 
 public enum Currency {
+
     USD("United States Dollar", "$", "USA"),
     EUR("Euro", "€", "Europe"),
     GBP("British Pound Sterling", "£", "United Kingdom");

@@ -2,7 +2,6 @@ package com.laba.solvd.bankhierarchy.bankingcore;
 
 import com.laba.solvd.bankhierarchy.customlinkedlist.GenericLinkedList;
 import com.laba.solvd.bankhierarchy.enums.AccountType;
-import com.laba.solvd.bankhierarchy.enums.JobTitle;
 import com.laba.solvd.bankhierarchy.exceptions.CustomerAlreadyExistsException;
 import com.laba.solvd.bankhierarchy.people.Customer;
 import com.laba.solvd.bankhierarchy.people.Employee;
