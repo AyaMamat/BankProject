@@ -5,34 +5,49 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class Files {
+
     private static final Logger LOGGER = LogManager.getLogger(Files.class);
 
     public static void main(String[] args) {
-        try (Scanner input = new Scanner(System.in)) {
-            LOGGER.info("Enter your location here:");
-            String locationOfFile = input.nextLine();
-            File file = new File(locationOfFile);
-            LOGGER.info("Write your text here: ");
-            String text = input.nextLine();
-            FileUtils.writeStringToFile(file, text, "UTF-8");
-            LOGGER.info("Words written to file successfully.");
-            String[] words = StringUtils.split(text);
-            Set<String> uniqueWords = new HashSet<>(Arrays.asList(words));
-            int count = uniqueWords.size();
-            File outputFile = new File("fileOutputText.txt");
-            FileUtils.writeStringToFile(outputFile, Integer.toString(count));
-            LOGGER.info("Count of unique words written to file successfully.");
+
+        String pathIn = "src/main/resources/fileInput.txt";
+        String pathOut = "src/main/resources/fileOutput.txt";
+        File inFile = new File(pathIn);
+        File outFile = new File(pathOut);
+
+        try (FileInputStream fis=new FileInputStream(inFile)) {
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+            BufferedReader br = new BufferedReader(isr);
+
+            String text = "";
+            String line = br.readLine();
+            while (line != null) {
+                text = text.concat(line + " ");
+                line = br.readLine();
+            }
+
+            List<String> words = Arrays.asList(text.split(" "));
+
+            HashMap<String, Integer> uniqueWords = new HashMap<>();
+            words.stream().forEach(word -> {
+                uniqueWords.putIfAbsent(word, 0);
+                uniqueWords.put(word, uniqueWords.get(word) + 1);
+            });
+
+            final String[] results = {"Number of unique words :: " + uniqueWords.size() + "\n\n"};
+            uniqueWords.keySet().stream().forEach(key -> {
+                results[0] = results[0].concat(key + " -> " + uniqueWords.get(key).toString() + "\n");
+            });
+            FileUtils.writeStringToFile(outFile, results[0], StandardCharsets.UTF_8, false);
+            LOGGER.info("Count of unique words successfully written in fileOutput file." );
         } catch (IOException e) {
-            e.printStackTrace();
-            LOGGER.error("An error occurred!", e);
+            LOGGER.warn("File not found ");
+            LOGGER.info("File not found");
         }
     }
-}
+    }

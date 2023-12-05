@@ -1,29 +1,25 @@
 package com.laba.solvd.bankhierarchy.financial;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.laba.solvd.bankhierarchy.enums.TransactionType;
 
 public class Transaction {
-    private static final List<Transaction> transactionList = new ArrayList<>();
-    private String transactionType;
+
+    private TransactionType transactionType;
     private double amount;
     private String transactionDate;
 
-    public Transaction(String transactionType, double amount, String transactionDate) {
+    public Transaction(TransactionType transactionType, double amount, String transactionDate) {
         this.transactionType = transactionType;
         this.amount = amount;
         this.transactionDate = transactionDate;
+
     }
 
-    public static List<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
-    public String getTransactionType() {
+    public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(String transactionType) {
+    public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
 
@@ -41,10 +37,5 @@ public class Transaction {
 
     public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
-    }
-
-    public void recordTransaction(Account account) {
-        Transaction newTransaction = new Transaction(transactionType, amount, transactionDate);
-        transactionList.add(newTransaction);
     }
 }

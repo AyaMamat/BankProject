@@ -1,34 +1,39 @@
 package com.laba.solvd.bankhierarchy.bankingcore;
 
-import com.laba.solvd.bankhierarchy.customlinkedlist.CustomLinkedList;
+import com.laba.solvd.bankhierarchy.customlinkedlist.GenericLinkedList;
+import com.laba.solvd.bankhierarchy.enums.AccountType;
+import com.laba.solvd.bankhierarchy.enums.JobTitle;
 import com.laba.solvd.bankhierarchy.exceptions.CustomerAlreadyExistsException;
 import com.laba.solvd.bankhierarchy.people.Customer;
 import com.laba.solvd.bankhierarchy.people.Employee;
+import com.laba.solvd.bankhierarchy.enums.Currency;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bank {
+
     private final String bankName;
-    private static final List<String> currencyList;
-    private final List<Branch> branches;
-    private final Set<Customer> customers;
-    private final CustomLinkedList<Employee> employees;
+    private static List<Currency> currencyList;
+    private List<Branch> branches;
+    private Set<Customer> customers;
+    private GenericLinkedList<Employee> employees;
 
     static {
-        currencyList = new ArrayList<>();
-        currencyList.add("USD");
-        currencyList.add("EUR");
-        currencyList.add("JPY");
+        currencyList = new ArrayList<Currency>();
+        currencyList.add(Currency.USD);
+        currencyList.add(Currency.EUR);
+        currencyList.add(Currency.GBP);
     }
 
     public Bank(String bankName) {
         this.bankName=bankName;
         branches = new ArrayList<>();
         customers = new HashSet<>();
-        employees = new CustomLinkedList<>();
+        employees = new GenericLinkedList<>();
     }
 
-    public static List<String> getCurrencyList() {
+    public static List<Currency> getCurrencyList() {
         return currencyList;
     }
 
@@ -55,12 +60,16 @@ public class Bank {
         customers.add(customer);
     }
 
-    public CustomLinkedList<Employee> getEmployees() {
+    public GenericLinkedList<Employee> getEmployees() {
         return employees;
     }
 
     public void addEmployee(Employee employee) {
         employees.add(employee);
+    }
+
+    public Set<Customer> filterCustomer(AccountType accountType){
+        return customers.stream().filter(customer -> customer.getAccount().equals(accountType)).collect(Collectors.toSet());
     }
 
     @Override

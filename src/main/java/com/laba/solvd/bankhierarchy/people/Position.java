@@ -1,32 +1,26 @@
 package com.laba.solvd.bankhierarchy.people;
 
+import com.laba.solvd.bankhierarchy.enums.JobTitle;
+
 public class Position {
-    private String title;
-    private double salary;
 
-    public Position(String title, double salary) {
-        this.title = title;
-        this.salary = salary;
+    private JobTitle jobTitle;
+
+
+    public Position(JobTitle jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
-    public String getTitle() {
-        return title;
+    public JobTitle getTitle() {
+        return jobTitle;
     }
 
-    public void setTitle(String positionName) {
-        this.title = positionName;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
+    public void setTitle(JobTitle jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     @Override
     public String toString() {
-        return "'" + title + '\'' + ", salary=" + salary + '}';
+        return "'" + jobTitle;
     }
 }

@@ -1,0 +1,12 @@
+Number of unique words :: 10
+
+A -> 1
+at -> 1
+student -> 1
+of -> 1
+Aya -> 1
+I -> 1
+course -> 1
+Solvd -> 1
+am -> 1
+Mamat. -> 1

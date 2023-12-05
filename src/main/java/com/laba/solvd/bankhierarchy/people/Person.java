@@ -3,6 +3,7 @@ package com.laba.solvd.bankhierarchy.people;
 import com.laba.solvd.bankhierarchy.interfaces.IPerson;
 
 public abstract class Person implements IPerson {
+
     private String name;
     private String address;
     private String phoneNumber;

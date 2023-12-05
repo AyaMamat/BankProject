@@ -10,7 +10,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.Objects;
 
 public class Employee extends Person implements IEmployee {
-    private static final Logger LOGGER = LogManager.getLogger(ATM.class);
+
+    private static final Logger LOGGER = LogManager.getLogger(Employee.class);
     private int employeeId;
     private Position position;
 
@@ -36,24 +37,6 @@ public class Employee extends Person implements IEmployee {
     }
 
     @Override
-    public String toString() {
-        return "Employee{" + "name='" + getName() + '\'' + ", address='" + getAddress() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", employeeId=" + getEmployeeId() + ", position=" + getPosition() + '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getAddress(), getPhoneNumber(), getEmployeeId(), getPosition());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return getEmployeeId() == employee.getEmployeeId() && Objects.equals(getName(), employee.getName()) && Objects.equals(getAddress(), employee.getAddress()) && Objects.equals(getPhoneNumber(), employee.getPhoneNumber()) && Objects.equals(getPosition(), employee.getPosition());
-    }
-
-    @Override
     public void authorizeLoan(Customer customer, double amount) {
         try {
             if (customer != null && customer.getAccount() != null) {
@@ -74,4 +57,24 @@ public class Employee extends Person implements IEmployee {
             LOGGER.info("Error: " + e.getMessage());
         }
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getAddress(), getPhoneNumber(), getEmployeeId(), getPosition());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return getEmployeeId() == employee.getEmployeeId() && Objects.equals(getName(), employee.getName()) && Objects.equals(getAddress(), employee.getAddress()) && Objects.equals(getPhoneNumber(), employee.getPhoneNumber()) && Objects.equals(getPosition(), employee.getPosition());
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" + "name='" + getName() + '\'' + ", address='" + getAddress() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + ", employeeId=" + getEmployeeId() + ", position=" + getPosition() + '}';
+    }
+
+
 }
