@@ -87,7 +87,7 @@ public class Bank implements Info {
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         LOGGER.info("<<<< BANK INFO >>>>");
         LOGGER.info("Bank Name: " + bankName);
         LOGGER.info("Currency List: " + currencyList);

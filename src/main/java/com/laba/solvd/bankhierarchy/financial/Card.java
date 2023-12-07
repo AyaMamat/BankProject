@@ -108,7 +108,7 @@ public class Card implements ICard, Info {
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         LOGGER.info("<<<< CARD INFO >>>>");
         LOGGER.info("Card Number: " + cardNumber);
         LOGGER.info("Expiration Date: " + expirationDate);

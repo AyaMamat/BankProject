@@ -50,7 +50,7 @@ public class Employee extends Person implements IEmployee, Info {
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         LOGGER.info("<<<< EMPLOYEE INFO >>>>");
         LOGGER.info("Name: " + getName());
         LOGGER.info("Address: " + getAddress());

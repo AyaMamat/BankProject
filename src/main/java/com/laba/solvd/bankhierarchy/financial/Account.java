@@ -55,7 +55,7 @@ public class Account implements Info {
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         LOGGER.info("<<<<<Account Info>>>>>");
         LOGGER.info("Account Number: " + accountNumber);
         LOGGER.info("Account Balance: $" + accountBalance);

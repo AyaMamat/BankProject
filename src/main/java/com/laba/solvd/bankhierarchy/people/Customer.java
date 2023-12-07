@@ -56,7 +56,7 @@ public class Customer extends Person implements ICustomer,Info {
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         LOGGER.info("<<<< CUSTOMER INFO >>>>");
         LOGGER.info("Name: " + getName());
         LOGGER.info("Address: " + getAddress());

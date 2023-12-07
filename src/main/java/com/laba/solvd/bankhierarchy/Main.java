@@ -29,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
 
         Bank bank = new Bank("Chase");
-        bank.getInfo();
+        bank.printInfo();
 
         Branch branchNKnollWoodDr = new Branch("2134 N KnollWood Ave", 2);
         Branch branchWDelphiaAve = new Branch("7898 W Delphia Ave", 3);
@@ -51,16 +51,16 @@ public class Main {
         Employee employee = new Employee("Aya Mamat", "2134 N KnollWood Ave", "123-456-7890", JobTitle.MANAGER);
         employee.setEmployeeId(1356888);
         bank.addEmployee(employee);
-        employee.getInfo();
+        employee.printInfo();
 
         employee.updateContactInfo("Angelina Jolie", "2368 W Agile Street", "555-555-5555");
         employee.setEmployeeId(135698765);
-        employee.getInfo();
+        employee.printInfo();
 
         Customer customerAlice = new Customer("Alice Wonder", "1234 NE Talman Ave", "987-654-3210");
         Customer customerBob = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210");
-        customerAlice.getInfo();
-        customerBob.getInfo();
+        customerAlice.printInfo();
+        customerBob.printInfo();
 
         Account bobAccount = new Account("1234567890", 1000.0, AccountType.CHECKING);
         Account aliceAccount = new Account("1234567890", 1000.0, AccountType.SAVINGS);
@@ -97,7 +97,7 @@ public class Main {
 
         Set<Customer> filteredCustomers = bank.filterCustomer(AccountType.SAVINGS);
         LOGGER.info("Filtered customers");
-        filteredCustomers.forEach(Customer::getInfo);
+        filteredCustomers.forEach(Customer::printInfo);
 
         Card card = new Card("2345678987654", "12/25", CardType.DEBIT);
         double paymentAmount = 100.0;

@@ -30,6 +30,7 @@ public class UniqueWordsFileReader {
             LOGGER.info("Number of unique words successfully written in file.");
         } catch (IOException e) {
             LOGGER.warn("File not found ", e.getMessage());
+
         }
     }
 }
