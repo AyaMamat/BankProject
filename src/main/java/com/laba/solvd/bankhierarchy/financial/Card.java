@@ -5,28 +5,30 @@ import com.laba.solvd.bankhierarchy.enums.TransactionType;
 import com.laba.solvd.bankhierarchy.exceptions.InsufficientFundsException;
 import com.laba.solvd.bankhierarchy.exceptions.InvalidCustomerException;
 import com.laba.solvd.bankhierarchy.interfaces.ICard;
+import com.laba.solvd.bankhierarchy.interfaces.Info;
 import com.laba.solvd.bankhierarchy.people.Customer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Card implements ICard {
+public class Card implements ICard, Info {
 
     private static final Logger LOGGER = LogManager.getLogger(Card.class);
-    private  List<Transaction> transactionList = new ArrayList<>();
+    private List<Transaction> transactionList = new ArrayList<>();
     private static String cardNumber;
     private String expirationDate;
     private int pin;
     private CardType cardType;
 
-    public Card(String cardNumber, String expirationDate,CardType cardType) {
+    public Card(String cardNumber, String expirationDate, CardType cardType) {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
-        this.cardType=cardType;
+        this.cardType = cardType;
     }
 
     public List<Transaction> getTransactionList() {
@@ -64,6 +66,7 @@ public class Card implements ICard {
     public int getPin() {
         return pin;
     }
+
     public void setPin(int pin) {
         if (pin >= 1000 && pin <= 9999) {
             this.pin = pin;
@@ -73,7 +76,7 @@ public class Card implements ICard {
     }
 
     public boolean validatePin(int enteredPin) {
-        return this.pin==enteredPin;
+        return this.pin == enteredPin;
     }
 
     @Override
@@ -92,7 +95,7 @@ public class Card implements ICard {
         }
     }
 
-    public void recordTransaction(TransactionType transactionType, double amount, String transactionDate) {
+    public void recordTransaction(TransactionType transactionType, double amount, LocalDate transactionDate) {
         Transaction newTransaction = new Transaction(transactionType, amount, transactionDate);
         transactionList.add(newTransaction);
     }
@@ -102,5 +105,21 @@ public class Card implements ICard {
                 .filter(transaction -> transaction.getTransactionType() == transactionType)
                 .sorted(Comparator.comparing(Transaction::getTransactionDate))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void getInfo() {
+        LOGGER.info("<<<< CARD INFO >>>>");
+        LOGGER.info("Card Number: " + cardNumber);
+        LOGGER.info("Expiration Date: " + expirationDate);
+        LOGGER.info("Card Type: " + cardType);
+
+        LOGGER.info("<<<< TRANSACTIONS >>>>");
+        if (transactionList.isEmpty()) {
+            LOGGER.info("No transactions recorded for this card.");
+        } else {
+            transactionList.forEach(transaction -> LOGGER.info("\t >> " + transaction));
+        }
+        LOGGER.info(" ");
     }
 }

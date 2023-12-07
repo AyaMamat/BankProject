@@ -1,9 +1,5 @@
 package com.laba.solvd.bankhierarchy.enums;
 
-import com.laba.solvd.bankhierarchy.bankingcore.ATM;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public enum JobTitle {
 
     MANAGER("MANAGER", 150000),

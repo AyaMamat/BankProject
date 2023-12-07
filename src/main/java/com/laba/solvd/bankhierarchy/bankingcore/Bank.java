@@ -2,16 +2,20 @@ package com.laba.solvd.bankhierarchy.bankingcore;
 
 import com.laba.solvd.bankhierarchy.customlinkedlist.GenericLinkedList;
 import com.laba.solvd.bankhierarchy.enums.AccountType;
+import com.laba.solvd.bankhierarchy.enums.Currency;
 import com.laba.solvd.bankhierarchy.exceptions.CustomerAlreadyExistsException;
+import com.laba.solvd.bankhierarchy.interfaces.Info;
 import com.laba.solvd.bankhierarchy.people.Customer;
 import com.laba.solvd.bankhierarchy.people.Employee;
-import com.laba.solvd.bankhierarchy.enums.Currency;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Bank {
+public class Bank implements Info {
 
+    private static final Logger LOGGER = LogManager.getLogger(Bank.class);
     private final String bankName;
     private static List<Currency> currencyList;
     private List<Branch> branches;
@@ -26,7 +30,7 @@ public class Bank {
     }
 
     public Bank(String bankName) {
-        this.bankName=bankName;
+        this.bankName = bankName;
         branches = new ArrayList<>();
         customers = new HashSet<>();
         employees = new GenericLinkedList<>();
@@ -44,10 +48,10 @@ public class Bank {
         return branches;
     }
 
-    public List<Branch> filterBranchesByAddress(String city){
+    public List<Branch> filterBranchesByAddress(String city) {
         return branches.stream()
-                .filter(branch ->branch.getAddress().contains(city))
-                .peek(branch -> System.out.println(branch))
+                .filter(branch -> branch.getAddress().contains(city))
+                .peek(branch -> LOGGER.info(branch))
                 .collect(Collectors.toList());
 
     }
@@ -75,11 +79,22 @@ public class Bank {
         employees.add(employee);
     }
 
-    public Set<Customer> filterCustomer(AccountType accountType){
+    public Set<Customer> filterCustomer(AccountType accountType) {
         return customers.stream()
                 .filter(customer -> customer.getAccount().equals(accountType))
-                .peek(customer -> System.out.println(customer))
+                .peek(customer -> LOGGER.info(customer))
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public void getInfo() {
+        LOGGER.info("<<<< BANK INFO >>>>");
+        LOGGER.info("Bank Name: " + bankName);
+        LOGGER.info("Currency List: " + currencyList);
+
+        LOGGER.info("<<<< BRANCHES >>>>");
+        branches.forEach(branch -> LOGGER.info("\t➢ " + branch.getAddress()));
+        LOGGER.info(" ");
     }
 
     @Override

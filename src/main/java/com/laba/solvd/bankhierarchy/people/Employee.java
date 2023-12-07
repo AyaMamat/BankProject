@@ -1,17 +1,14 @@
 package com.laba.solvd.bankhierarchy.people;
 
-import com.laba.solvd.bankhierarchy.bankingcore.ATM;
-import com.laba.solvd.bankhierarchy.enums.CardType;
 import com.laba.solvd.bankhierarchy.enums.JobTitle;
 import com.laba.solvd.bankhierarchy.exceptions.InvalidCustomerException;
 import com.laba.solvd.bankhierarchy.exceptions.LoanAuthorizationException;
 import com.laba.solvd.bankhierarchy.interfaces.IEmployee;
+import com.laba.solvd.bankhierarchy.interfaces.Info;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Objects;
-
-public class Employee extends Person implements IEmployee {
+public class Employee extends Person implements IEmployee, Info {
 
     private static final Logger LOGGER = LogManager.getLogger(Employee.class);
     private int employeeId;
@@ -50,5 +47,15 @@ public class Employee extends Person implements IEmployee {
         } catch (LoanAuthorizationException | InvalidCustomerException e) {
             LOGGER.info("Error: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void getInfo() {
+        LOGGER.info("<<<< EMPLOYEE INFO >>>>");
+        LOGGER.info("Name: " + getName());
+        LOGGER.info("Address: " + getAddress());
+        LOGGER.info("Phone Number: " + getPhoneNumber());
+        LOGGER.info("Job Title: " + jobTitle);
+        LOGGER.info(" ");
     }
 }

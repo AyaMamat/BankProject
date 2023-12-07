@@ -27,5 +27,4 @@ public enum Currency {
     public String getCountry() {
         return country;
     }
-
 }

@@ -19,6 +19,7 @@ import com.laba.solvd.bankhierarchy.people.Employee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -28,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
 
         Bank bank = new Bank("Chase");
-        LOGGER.info(bank);
+        bank.getInfo();
 
         Branch branchNKnollWoodDr = new Branch("2134 N KnollWood Ave", 2);
         Branch branchWDelphiaAve = new Branch("7898 W Delphia Ave", 3);
@@ -47,39 +48,41 @@ public class Main {
             bank.addBranch(branch);
         }
 
-        Employee employee = new Employee("Aya Mamat", "2134 N KnollWood Ave", "123-456-7890",JobTitle.MANAGER);
+        Employee employee = new Employee("Aya Mamat", "2134 N KnollWood Ave", "123-456-7890", JobTitle.MANAGER);
         employee.setEmployeeId(1356888);
         bank.addEmployee(employee);
-        LOGGER.info(employee);
+        employee.getInfo();
 
         employee.updateContactInfo("Angelina Jolie", "2368 W Agile Street", "555-555-5555");
         employee.setEmployeeId(135698765);
-        LOGGER.info(employee);
+        employee.getInfo();
 
         Customer customerAlice = new Customer("Alice Wonder", "1234 NE Talman Ave", "987-654-3210");
         Customer customerBob = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210");
+        customerAlice.getInfo();
+        customerBob.getInfo();
 
         Account bobAccount = new Account("1234567890", 1000.0, AccountType.CHECKING);
-        Account aliceAccount = new Account("1234567890", 1000.0,AccountType.SAVINGS);
+        Account aliceAccount = new Account("1234567890", 1000.0, AccountType.SAVINGS);
 
         Card bobCard = new Card("1234-5678-9012-3456", "12/25", CardType.DEBIT);
-        Card aliceCard = new Card("1234-5678-9012-3456", "12/25",CardType.CREDIT);
+        Card aliceCard = new Card("1234-5678-9012-3456", "12/25", CardType.CREDIT);
 
-        List<Customer> customers=new ArrayList<>();
+        List<Customer> customers = new ArrayList<>();
         customers.add(customerAlice);
         customers.add(customerBob);
 
         customerAlice.addAccount(aliceAccount);
         customerBob.addAccount(bobAccount);
 
-        List<Account> accounts=new ArrayList<>();
+        List<Account> accounts = new ArrayList<>();
         accounts.add(bobAccount);
         accounts.add(aliceAccount);
 
         bobAccount.addCard(bobCard);
         aliceAccount.addCard(aliceCard);
 
-        List<Card> cardList=new ArrayList<>();
+        List<Card> cardList = new ArrayList<>();
         cardList.add(bobCard);
         cardList.add(aliceCard);
 
@@ -92,25 +95,24 @@ public class Main {
             e.printStackTrace();
         }
 
-        Set<Customer>filteredCustomers = bank.filterCustomer(AccountType.SAVINGS);
+        Set<Customer> filteredCustomers = bank.filterCustomer(AccountType.SAVINGS);
         LOGGER.info("Filtered customers");
-        filteredCustomers.forEach(System.out::println);
+        filteredCustomers.forEach(Customer::getInfo);
 
-
-        Card card = new Card("2345678987654", "12/25",CardType.DEBIT);
+        Card card = new Card("2345678987654", "12/25", CardType.DEBIT);
         double paymentAmount = 100.0;
 
         try {
             card.makePayment(customerAlice, paymentAmount);
             LOGGER.info("Payment successful.");
         } catch (InsufficientFundsException e) {
-            System.out.println("Error: " + e.getMessage());
+            LOGGER.error("Error: " + e.getMessage());
         } catch (InvalidCustomerException e) {
-            LOGGER.info("Error: " + e.getMessage());
+            LOGGER.error("Error: " + e.getMessage());
         }
 
-        Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, 1000.0, "2023-01-01");
-        LOGGER.info("Transaction type: "+depositTransaction.getTransactionType()+" Amount: "+depositTransaction.getAmount()+ " Transaction date: "+depositTransaction.getTransactionDate());
+        Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, 1000.0, LocalDate.parse("2023-12-05"));
+        LOGGER.info("Transaction type: " + depositTransaction.getTransactionType() + " Amount: " + depositTransaction.getAmount() + " Transaction date: " + depositTransaction.getTransactionDate());
 
         LOGGER.info("=====================================================");
 
@@ -121,8 +123,7 @@ public class Main {
                 LOGGER.info("1. Deposit");
                 LOGGER.info("2. Withdraw");
                 LOGGER.info("3. Check Balance");
-                LOGGER.info("4. View Transactions");
-                LOGGER.info("5. Exit");
+                LOGGER.info("4. Exit");
 
                 int choice = scanner.nextInt();
 

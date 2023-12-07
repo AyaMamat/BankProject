@@ -1,6 +1,7 @@
 package com.laba.solvd.bankhierarchy.customlinkedlist;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericLinkedList<E> {
 

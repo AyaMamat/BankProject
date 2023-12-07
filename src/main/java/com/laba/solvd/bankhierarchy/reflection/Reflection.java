@@ -1,6 +1,5 @@
 package com.laba.solvd.bankhierarchy.reflection;
 
-import com.laba.solvd.bankhierarchy.people.Customer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Reflection {
+
     private static final Logger LOGGER = LogManager.getLogger(Reflection.class);
 
     public static void main(String[] args) {
@@ -21,26 +21,26 @@ public class Reflection {
     public static void reflection() {
 
         try {
-            Customer myCustomer = new Customer("Kayla Kobe", "1234 Quentin Rd", "123 455 6664");
+            Class myCustomer = Class.forName("com.laba.solvd.bankhierarchy.people.Customer");
 
-            Class customer=myCustomer.getClass();
+            Class customerClass = myCustomer.getClass();
             LOGGER.info("Customer class name");
-            LOGGER.info("<<<<CLASS NAME>>>>>>"+customer.getName()+ "-->>"+Modifier.toString(customer.getModifiers()));
-            List<Class> customerInterfaces=Arrays.asList(customer.getInterfaces());
+            LOGGER.info("<<<<CLASS NAME>>>>>>" + customerClass.getName() + "-->>" + Modifier.toString(customerClass.getModifiers()));
+
             LOGGER.info("<<<<<<<<<<FIELDS>>>>>>>>>>>>>");
-            List<Field> customerFields = Arrays.asList(customer.getClass().getDeclaredFields());
+            List<Field> customerFields = Arrays.asList(customerClass.getClass().getDeclaredFields());
             customerFields.stream()
                     .forEach(field -> LOGGER.info(field.getName() + " -->> " + Modifier.toString(field.getModifiers())));
 
             LOGGER.info("<<<<<<<<<<METHODS>>>>>>>>>>>>>>");
-            List<Method> customerMethods = Arrays.asList(customer.getClass().getDeclaredMethods());
+            List<Method> customerMethods = Arrays.asList(customerClass.getClass().getDeclaredMethods());
             customerMethods.stream()
                     .forEach(method -> LOGGER.info(method.getName() + " -->> " + Modifier.toString(method.getModifiers())));
 
             LOGGER.info("<<<<<<<<<<CONSTRUCTORS>>>>>>>>>>>>>>");
-            List<Constructor> customerConstructors = Arrays.asList(customer.getClass().getDeclaredConstructors());
-            customerConstructors.stream()
-                    .forEach(constructor -> LOGGER.info(constructor.getName() + " -->> " + Modifier.toString(constructor.getModifiers())));
+            List<Constructor> customerConstructor = Arrays.asList(customerClass.getClass().getDeclaredConstructors());
+            customerConstructor.stream()
+                    .forEach(method -> LOGGER.info(method.getName() + " -->> " + Modifier.toString(method.getModifiers())));
 
         } catch (Exception e) {
             LOGGER.error("Error has occurred");

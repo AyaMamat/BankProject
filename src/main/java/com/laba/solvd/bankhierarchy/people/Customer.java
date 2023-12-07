@@ -3,13 +3,14 @@ package com.laba.solvd.bankhierarchy.people;
 import com.laba.solvd.bankhierarchy.financial.Account;
 import com.laba.solvd.bankhierarchy.financial.Card;
 import com.laba.solvd.bankhierarchy.interfaces.ICustomer;
+import com.laba.solvd.bankhierarchy.interfaces.Info;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Customer extends Person implements ICustomer {
+public class Customer extends Person implements ICustomer,Info {
 
     private static final Logger LOGGER = LogManager.getLogger(Customer.class);
     private Account account;
@@ -52,6 +53,31 @@ public class Customer extends Person implements ICustomer {
         LOGGER.info("Interest Rate: " + (interestRate * 100) + "%");
         LOGGER.info("Interest Amount: $" + interest);
         LOGGER.info("Total Amount Payable: $" + totalAmount);
+    }
+
+    @Override
+    public void getInfo() {
+        LOGGER.info("<<<< CUSTOMER INFO >>>>");
+        LOGGER.info("Name: " + getName());
+        LOGGER.info("Address: " + getAddress());
+        LOGGER.info("Phone Number: " + getPhoneNumber());
+
+        if (account != null) {
+            LOGGER.info("<<<< ACCOUNT INFO >>>>");
+            LOGGER.info("Account Number: " + account.getAccountNumber());
+            LOGGER.info("Account Balance: $" + account.getAccountBalance());
+            LOGGER.info("Account Type: " + account.getAccountType());
+        }
+
+        if (card != null) {
+            LOGGER.info("<<<< CARD INFO >>>>");
+            LOGGER.info("Card Number: " + card.getCardNumber());
+            LOGGER.info("Expiration Date: " + card.getExpirationDate());
+            LOGGER.info("Card Type: " + card.getCardType());
+            LOGGER.info("PIN: " + card.getPin());
+        }
+
+        LOGGER.info(" ");
     }
 
     @Override

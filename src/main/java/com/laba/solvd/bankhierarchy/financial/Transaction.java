@@ -2,19 +2,18 @@ package com.laba.solvd.bankhierarchy.financial;
 
 import com.laba.solvd.bankhierarchy.enums.TransactionType;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Transaction {
 
     private TransactionType transactionType;
     private double amount;
-    private Date transactionDate;
+    private LocalDate transactionDate;
 
-    public Transaction(TransactionType transactionType, double amount, Date transactionDate) {
+    public Transaction(TransactionType transactionType, double amount, LocalDate transactionDate) {
         this.transactionType = transactionType;
         this.amount = amount;
         this.transactionDate = transactionDate;
-
     }
 
     public TransactionType getTransactionType() {
@@ -33,11 +32,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Date getTransactionDate() {
+    public LocalDate getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
     }
 }
