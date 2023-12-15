@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Account implements Info {
+public class Account extends Thread implements Info {
 
     private static final Logger LOGGER = LogManager.getLogger(Account.class);
     private final String accountNumber;
@@ -52,6 +52,27 @@ public class Account implements Info {
         return cardList.stream()
                 .filter(transaction -> transaction.getCardType().equals(cardType))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void run() {
+        try {
+            LOGGER.info("Thread started: " + Thread.currentThread().getName());
+            updateAccountInformation();
+            Thread.sleep(3000);
+            LOGGER.info("Thread ended: " + Thread.currentThread().getName());
+        } catch (Exception e) {
+            LOGGER.error("Thread encountered an error: " + Thread.currentThread().getName(), e);
+        }
+    }
+
+    public synchronized void updateAccountInformation() {
+        LOGGER.info("Updating account information...");
+
+        double newBalance = accountBalance + 1000.0;
+        setAccountBalance(newBalance);
+
+        LOGGER.info("Account balance updated. New balance: $" + newBalance);
     }
 
     @Override

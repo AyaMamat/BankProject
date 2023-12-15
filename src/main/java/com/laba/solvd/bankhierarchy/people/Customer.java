@@ -1,5 +1,7 @@
 package com.laba.solvd.bankhierarchy.people;
 
+import com.laba.solvd.bankhierarchy.exceptions.InsufficientFundsException;
+import com.laba.solvd.bankhierarchy.exceptions.InvalidCustomerException;
 import com.laba.solvd.bankhierarchy.financial.Account;
 import com.laba.solvd.bankhierarchy.financial.Card;
 import com.laba.solvd.bankhierarchy.interfaces.ICustomer;
@@ -7,10 +9,9 @@ import com.laba.solvd.bankhierarchy.interfaces.Info;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
 import java.util.Objects;
 
-public class Customer extends Person implements ICustomer,Info {
+public class Customer extends Person implements ICustomer, Info, Runnable {
 
     private static final Logger LOGGER = LogManager.getLogger(Customer.class);
     private Account account;
@@ -56,6 +57,29 @@ public class Customer extends Person implements ICustomer,Info {
     }
 
     @Override
+    public void run() {
+        try {
+            LOGGER.info("Thread started: " + Thread.currentThread().getName());
+            if (card != null && account != null) {
+                double paymentAmount = 100;
+                LOGGER.info("Making a payment for " + getName() + " -$" + paymentAmount);
+                try {
+                    card.makePayment(this, paymentAmount);
+                    LOGGER.info("Payment completed.new account balance: $" + account.getAccountBalance());
+                } catch (InsufficientFundsException e) {
+                    LOGGER.error("Payment declined. Insufficient funds!" + e.getMessage());
+                } catch (InvalidCustomerException e) {
+                    LOGGER.error("Customer doesn't exist! Please re enter" + e.getMessage());
+                }
+            }
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            LOGGER.error("Thread interrupted: " + Thread.currentThread().getName(), e);
+        }
+    }
+
+
+    @Override
     public void printInfo() {
         LOGGER.info("<<<< CUSTOMER INFO >>>>");
         LOGGER.info("Name: " + getName());
@@ -92,6 +116,7 @@ public class Customer extends Person implements ICustomer,Info {
         Customer customer = (Customer) o;
         return Objects.equals(getName(), customer.getName()) && Objects.equals(getAddress(), customer.getAddress()) && Objects.equals(getPhoneNumber(), customer.getPhoneNumber());
     }
+
     @Override
     public String toString() {
         return "Customer{" + "name='" + getName() + '\'' + ", address='" + getAddress() + '\'' + ", phoneNumber='" + getPhoneNumber() + '\'' + '}';
