@@ -80,7 +80,7 @@ public class Card implements ICard, Info {
     }
 
     @Override
-    public void makePayment(Customer customer, double amount) throws InsufficientFundsException, InvalidCustomerException {
+    public synchronized void makePayment(Customer customer, double amount) throws InsufficientFundsException, InvalidCustomerException {
         if (customer.getCard() != null && customer.getAccount() != null) {
             double accountBalance = customer.getAccount().getAccountBalance();
             if (accountBalance >= amount) {

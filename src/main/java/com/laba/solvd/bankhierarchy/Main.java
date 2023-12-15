@@ -59,11 +59,14 @@ public class Main {
 
         Customer customerAlice = new Customer("Alice Wonder", "1234 NE Talman Ave", "987-654-3210");
         Customer customerBob = new Customer("Bob Smith", "5785 NE Talman Ave", "987-654-3210");
+        customerBob.run();
         customerAlice.printInfo();
         customerBob.printInfo();
 
+
         Account bobAccount = new Account("1234567890", 1000.0, AccountType.CHECKING);
         Account aliceAccount = new Account("1234567890", 1000.0, AccountType.SAVINGS);
+        bobAccount.start();
 
         Card bobCard = new Card("1234-5678-9012-3456", "12/25", CardType.DEBIT);
         Card aliceCard = new Card("1234-5678-9012-3456", "12/25", CardType.CREDIT);
@@ -163,5 +166,7 @@ public class Main {
         } catch (Exception e) {
             LOGGER.info("An error occurred: " + e.getMessage());
         }
+
+
     }
 }
